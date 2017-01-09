@@ -80,3 +80,9 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+
+
+try:
+    from local_settings import * # noqa
+except ImportError:
+    pass
