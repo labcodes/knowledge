@@ -1,3 +1,18 @@
-{% for link in links %}
-  <p><a href="{{ link.link }}" target="_blank">{{ link.title }}</a></p>
-{% endfor %}
+{% load static %}
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Knowledge</title>
+    <link rel="stylesheet" href="{% static "links/vendors/bootstrap-3.3.7/css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "links/vendors/bootstrap-3.3.7/css/bootstrap-theme.min.css" %}">
+  </head>
+  <body>
+    {% for link in links %}
+      <p><a href="{{ link.link }}" target="_blank">{{ link.title }}</a></p>
+    {% endfor %}
+  </body>
+</html>
