@@ -6,5 +6,4 @@ from .models import Link
 
 def index(request):
     links = Link.objects.all()
-    print (links)
     return render(request, 'links/index.html', {'links': links})
