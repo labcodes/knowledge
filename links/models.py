@@ -5,7 +5,7 @@ from django.db import models
 
 class Link(models.Model):
     title = models.CharField(max_length=250)
-    link = models.URLField(max_length=2000)
+    url = models.URLField(max_length=2000)
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
