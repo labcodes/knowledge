@@ -1,27 +1,18 @@
-{% load static %}
+{% extends 'links/base.html' %}
 
-<!DOCTYPE html>
+{% block 'content' %}
+<div class="page-header">
+  <h1>List of all Links</h1>
+</div>
 
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Knowledge</title>
-    <link rel="stylesheet" href="{% static "links/vendors/bootstrap-3.3.7/css/bootstrap.min.css" %}">
-    <link rel="stylesheet" href="{% static "links/vendors/bootstrap-3.3.7/css/bootstrap-theme.min.css" %}">
-    <link rel="stylesheet" href="{% static "links/css/main.css" %}">
-  </head>
-  <body>
-    <div class="container">
-      <div class="page-header">
-        <h1>Some useful links</h1>
-      </div>
-
-      <div class="row links-row">
-        {% for link in links %}
-          <p><a href="{{ link.url }}" target="_blank">{{ link.title }}</a></p>
-        {% endfor %}
-      </div>
+<div class="row links-row">
+  {% for link in links %}
+    <div class="single-link">
+      <p>{{ link.title }}</p>
+      <span><a href="{{ link.url }}" target="_blank">{{ link.url }}</a></span>
     </div>
-  </body>
-</html>
+  {% endfor %}
+  {% include "links/pagination.html" with page=page_obj %}
+</div>
+
+{% endblock %}

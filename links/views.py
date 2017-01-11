@@ -1,9 +1,11 @@
-from django.shortcuts import render
 from .models import Link
-
+from django.views.generic.list import ListView
+from knowledge.settings import LINKS_PER_PAGE
 # Create your views here.
 
 
-def index(request):
-    links = Link.objects.all()
-    return render(request, 'links/index.html', {'links': links})
+class IndexView(ListView):
+    model = Link
+    context_object_name = 'links'
+    paginate_by = LINKS_PER_PAGE
+    template_name = 'links/index.html'
