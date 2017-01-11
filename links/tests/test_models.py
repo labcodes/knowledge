@@ -8,10 +8,11 @@ def has_field(model, field):
 
 
 @pytest.mark.django_db
-def test_link_should_have_some_fields():
-    assert has_field(Link, 'title')
-    assert has_field(Link, 'url')
-    assert has_field(Link, 'created')
+def test_create_link():
+    link = mommy.make(Link)
+    same_link = Link.objects.filter(id=link.id)[0]
+
+    assert link == same_link
 
 
 @pytest.mark.django_db
