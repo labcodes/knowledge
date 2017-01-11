@@ -1,11 +1,17 @@
 .links-row {
-  margin-top: 40px;
-  border-radius: 10px;
-  border: 1px solid #d3d3d3;
   text-align: center;
   padding: 20px;
+  padding-top: 0;
+}
+
+.links-row p {
+  margin-bottom: 0;
+  margin-top: 10px;
 }
 
 .page-header {
   text-align: center;
+  border: 0;
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
