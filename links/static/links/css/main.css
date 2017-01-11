@@ -6,6 +6,9 @@
 
 .links-row p {
   margin-bottom: 0;
+}
+
+.single-link {
   margin-top: 10px;
 }
 
@@ -14,4 +17,5 @@
   border: 0;
   padding-bottom: 0;
   margin-bottom: 0;
+  margin-top: 0;
 }

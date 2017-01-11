@@ -2,12 +2,12 @@
 
 {% block 'content' %}
 <div class="page-header">
-  <h1>Some useful links</h1>
+  <h1>List of all Links</h1>
 </div>
 
 <div class="row links-row">
   {% for link in links %}
-    <div>
+    <div class="single-link">
       <p>{{ link.title }}</p>
       <span><a href="{{ link.url }}" target="_blank">{{ link.url }}</a></span>
     </div>
