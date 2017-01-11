@@ -87,6 +87,7 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
+LINKS_PER_PAGE = 20
 
 try:
     from .local_settings import * # noqa
