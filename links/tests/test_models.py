@@ -18,4 +18,4 @@ def test_link_should_have_some_fields():
 def test_links_are_ordered_by_date():
     mommy.make(Link, _quantity=10)
 
-    assert set(Link.objects.all()) == set(Link.objects.all().order_by('-created'))
+    assert list(Link.objects.all()) == list(Link.objects.all().order_by('-created'))
