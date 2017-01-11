@@ -3,10 +3,6 @@ from links.models import Link
 from model_mommy import mommy
 
 
-def has_field(model, field):
-    return field in [f.name for f in model._meta.get_fields()]
-
-
 @pytest.mark.django_db
 def test_create_link():
     link = mommy.make(Link)
