@@ -1,0 +1,36 @@
+.panel-submit-link {
+  margin-top: 80px;
+  box-shadow: none;
+}
+
+.panel-submit-link > .panel-heading {
+  color: #00415d;
+  background-color: #fff
+  border-color: #fff;
+  text-align:center;
+}
+
+.panel-submit-link input {
+  height: 45px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+
+.btn-submit-link {
+  background-color: #59B2E0;
+  outline: none;
+  color: #fff;
+  font-size: 14px;
+  height: auto;
+  font-weight: normal;
+  padding: 14px 0;
+  text-transform: uppercase;
+  border-color: #59B2E6;
+}
+
+.btn-submit-link:hover,
+.btn-submit-link:focus {
+  color: #fff;
+  background-color: #53A3CD;
+  border-color: #53A3CD;
+}
