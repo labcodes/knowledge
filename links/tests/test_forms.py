@@ -1,10 +1,15 @@
 from links.forms import LinkForm
+from links.models import Link
+import pytest
 
 
+@pytest.mark.django_db
 def test_link_creation_valid_form():
     form_data = {'title': 'TreeHouse', 'url': 'https://teamtreehouse.com/home'}
     form = LinkForm(data=form_data)
-    assert form.is_valid()
+    form.save()
+
+    assert Link.objects.get(title='TreeHouse', url='https://teamtreehouse.com/home')
 
 
 def test_link_creation_invalid_form():
