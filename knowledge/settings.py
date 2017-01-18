@@ -91,7 +91,7 @@ LINKS_PER_PAGE = 20
 
 SLACK_TOKEN = 'xoxp-2714640307-16107282935-128291219893-2b0e7cd6da92eb127f9ffdfaa2a97cee'
 SLACK_BOT_NAME = 'Cintia'
-SLACK_CHANNEL_ID = '#random'
+SLACK_CHANNEL_ID = '#links'
 
 try:
     from .local_settings import * # noqa
