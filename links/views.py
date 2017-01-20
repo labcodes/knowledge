@@ -2,6 +2,7 @@ from .forms import LinkForm
 from .models import Link
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 from django.views.generic.list import ListView
 from django.views.generic import CreateView
 from knowledge.settings import LINKS_PER_PAGE
@@ -22,6 +23,7 @@ class CreateLinkView(CreateView):
     form_class = LinkForm
 
 
+@require_POST()
 @csrf_exempt
 def SlackNewLink(request):
     data = request.POST
