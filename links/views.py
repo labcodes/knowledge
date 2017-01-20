@@ -27,16 +27,8 @@ class CreateSlackNewLinkView(View):
     def post(self, request):
 
         data = request.POST
-
         text = data.get('text')
+        title, url = text.split(': ')
+        Link.objects.create(title=title, url=url)
 
-        separation_between_title_and_url = text.find(':')
-        url_position = text.find('http')
-
-        link_title = text[:separation_between_title_and_url]
-        link_url = text[url_position:]
-
-        new_link = Link(title=link_title, url=link_url)
-        new_link.save()
-
-        return HttpResponse(status=200)
+        return HttpResponse(status=201)
