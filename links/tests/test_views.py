@@ -58,3 +58,18 @@ def test_create_link_form_template_name(client):
     template_names = [template.name for template in response.templates]
 
     assert 'links/create-link-form.html' in template_names
+
+
+@pytest.mark.usefixtures("mock_slack_notification")
+@pytest.mark.django_db
+def test_slack_new_link_view_response(client, monkeypatch):
+    response = client.post('/api/link/', {'text': 'TreeHouse: https://teamtreehouse.com/home'})
+
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_slack_new_link_view_refuse_get_method(client, monkeypatch):
+    response = client.get('/api/link/')
+
+    assert response.status_code == 405
