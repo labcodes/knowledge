@@ -1,10 +1,12 @@
-from .forms import LinkForm
-from .models import Link
 from django.http import HttpResponse
+from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic import CreateView, View
+
 from knowledge.settings import LINKS_PER_PAGE
-from django.urls import reverse_lazy
+
+from .models import Link
+from .forms import LinkForm
 
 # Create your views here.
 
