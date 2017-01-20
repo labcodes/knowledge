@@ -8,8 +8,6 @@ from django.conf import settings
 from .models import Link
 from .forms import LinkForm
 
-# Create your views here.
-
 
 class IndexView(ListView):
     model = Link
