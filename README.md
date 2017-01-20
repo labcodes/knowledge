@@ -1,6 +1,7 @@
 # Knowledge
 
-Knowledge it's a container of links.
+Knowledge is the place Labcodes can always find great resources to read, answers to their questions
+and best practices. Everything curated by the most awesome people in the world, our teammates.
 
 ## Project Setup
 
