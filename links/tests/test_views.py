@@ -40,3 +40,19 @@ def test_pagination(client):
     links_in_the_second_page = count_links(client, '/?page=2')
 
     assert links_in_the_first_page == 20 and links_in_the_second_page == 5
+
+
+@pytest.mark.django_db
+def test_create_link_form_view_response(client):
+    response = client.get('/create-new-link/')
+
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_create_link_form_template_name(client):
+    response = client.get('/create-new-link/')
+
+    template_names = [template.name for template in response.templates]
+
+    assert 'links/create-link-form.html' in template_names
