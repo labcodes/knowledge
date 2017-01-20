@@ -2,6 +2,7 @@ import pytest
 import re
 from model_mommy import mommy
 from links.models import Link
+from links.utils import mock_slack_notification
 
 
 @pytest.mark.django_db
@@ -31,6 +32,7 @@ def count_links(client, url):
     return links_counter
 
 
+@pytest.mark.usefixtures("mock_slack_notification")
 @pytest.mark.django_db
 def test_pagination(client):
     mommy.make(Link, _quantity=25)
