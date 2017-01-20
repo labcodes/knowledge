@@ -2,7 +2,6 @@ import pytest
 import re
 from model_mommy import mommy
 from links.models import Link
-from links.utils import mock_slack_notification
 
 
 @pytest.mark.django_db
@@ -32,9 +31,8 @@ def count_links(client, url):
     return links_counter
 
 
-@pytest.mark.usefixtures("mock_slack_notification")
 @pytest.mark.django_db
-def test_pagination(client):
+def test_pagination(client, mock_slack_notification):
     mommy.make(Link, _quantity=25)
 
     links_in_the_first_page = count_links(client, '/')
@@ -60,12 +58,15 @@ def test_create_link_form_template_name(client):
     assert 'links/create-link-form.html' in template_names
 
 
-@pytest.mark.usefixtures("mock_slack_notification")
 @pytest.mark.django_db
-def test_slack_new_link_view_response(client, monkeypatch):
+def test_slack_new_link_view_response(client, mock_slack_notification):
     response = client.post('/api/link/', {'text': 'TreeHouse: https://teamtreehouse.com/home'})
 
-    assert response.status_code == 200
+    link = Link.objects.all()[0]
+
+    assert response.status_code == 201
+    assert link.title == "TreeHouse"
+    assert link.url == "https://teamtreehouse.com/home"
 
 
 @pytest.mark.django_db
