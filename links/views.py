@@ -23,7 +23,7 @@ class CreateLinkView(CreateView):
     form_class = LinkForm
 
 
-@require_POST()
+@require_POST
 @csrf_exempt
 def SlackNewLink(request):
     data = request.POST
