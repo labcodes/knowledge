@@ -12,7 +12,7 @@ def test_create_link(mock_slack_notification):
 
 
 @pytest.mark.django_db
-def test_create_from_slack_link_manager():
+def test_create_from_slack_link_manager(mock_slack_notification):
 
     text = "title: http://example.com"
     link = Link.objects.create_from_slack(text)
