@@ -7,8 +7,8 @@ and best practices. Everything curated by the most awesome people in the world, 
 
 ### Setting up the local_settings.py file
 
-Inside the 'knowledge' folder, there's a file called 'local_settings.py.example'.
-Create a new local_settings.py file and you will just have to change the 'USER' and 'password' keys.
+Inside the `knowledge` folder, there's a file called `local_settings.py.example`.
+Create a new `local_settings.py` file and you will just have to change the `USER` and `password` keys.
 
 ### Installing Postgresql
 
