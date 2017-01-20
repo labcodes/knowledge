@@ -25,10 +25,6 @@ class CreateLinkView(CreateView):
 class CreateSlackNewLinkView(View):
 
     def post(self, request):
-
-        data = request.POST
-        text = data.get('text')
-        title, url = text.split(': ')
-        Link.objects.create(title=title, url=url)
-
+        text = request.POST.get('text')
+        Link.objects.create_from_slack(text)
         return HttpResponse(status=201)

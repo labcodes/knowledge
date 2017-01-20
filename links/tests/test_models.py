@@ -12,6 +12,16 @@ def test_create_link(mock_slack_notification):
 
 
 @pytest.mark.django_db
+def test_create_from_slack_link_manager():
+
+    text = "title: http://example.com"
+    link = Link.objects.create_from_slack(text)
+
+    assert link.title == "title"
+    assert link.url == "http://example.com"
+
+
+@pytest.mark.django_db
 def test_links_are_ordered_by_date(mock_slack_notification):
     mommy.make(Link, _quantity=10)
 
