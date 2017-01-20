@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.views.generic.list import ListView
-from django.views.generic import CreateView
+from django.views.generic import CreateView, View
 from knowledge.settings import LINKS_PER_PAGE
 
 # Create your views here.
@@ -23,20 +23,21 @@ class CreateLinkView(CreateView):
     form_class = LinkForm
 
 
-@require_POST
-@csrf_exempt
-def SlackNewLink(request):
-    data = request.POST
+class CreateSlackNewLinkView(View):
 
-    text = data.get('text')
+    def post(self, request):
 
-    separation_between_title_and_url = text.find(':')
-    url_position = text.find('http')
+        data = request.POST
 
-    link_title = text[:separation_between_title_and_url]
-    link_url = text[url_position:]
+        text = data.get('text')
 
-    new_link = Link(title=link_title, url=link_url)
-    new_link.save()
+        separation_between_title_and_url = text.find(':')
+        url_position = text.find('http')
 
-    return HttpResponse(status=200)
+        link_title = text[:separation_between_title_and_url]
+        link_url = text[url_position:]
+
+        new_link = Link(title=link_title, url=link_url)
+        new_link.save()
+
+        return HttpResponse(status=200)
