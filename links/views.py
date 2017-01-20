@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic import CreateView, View
 
-from knowledge.settings import LINKS_PER_PAGE
+from django.conf import settings
 
 from .models import Link
 from .forms import LinkForm
@@ -14,7 +14,7 @@ from .forms import LinkForm
 class IndexView(ListView):
     model = Link
     context_object_name = 'links'
-    paginate_by = LINKS_PER_PAGE
+    paginate_by = settings.LINKS_PER_PAGE
     template_name = 'links/index.html'
 
 
