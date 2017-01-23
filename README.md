@@ -5,6 +5,12 @@ and best practices. Everything curated by the most awesome people in the world, 
 
 ## Project Setup
 
+### Setting up .env file
+
+Create a new file in the root folder called `.env`.
+Inside it, create a variable `DEBUG` with value `True` and another called `SLACK_TOKEN` and you will
+find the value for the token in this url: https://api.slack.com/docs/oauth-test-tokens
+
 ### Setting up the local_settings.py file
 
 Inside the `knowledge` folder, there's a file called `local_settings.py.example`.
