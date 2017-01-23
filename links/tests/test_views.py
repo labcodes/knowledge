@@ -80,6 +80,7 @@ def test_slack_new_link_view_refuse_get_method(client, monkeypatch):
 def test_slack_new_invalid_link_in_view(client):
     response = client.post('/api/link/', {'text': 'TreeHouse:https://teamtreehouse.com/home'})
 
+    assert response.data.get('text') == 'Your Link is not valid.\nPlease check the syntax: title: url'
     assert response.status_code == 400
 
 
