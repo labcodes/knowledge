@@ -74,3 +74,16 @@ def test_slack_new_link_view_refuse_get_method(client, monkeypatch):
     response = client.get('/api/link/')
 
     assert response.status_code == 405
+
+
+@pytest.mark.django_db
+def test_slack_new_invalid_link_in_view(client):
+    response = client.post('/api/link/', {'text': 'TreeHouse:https://teamtreehouse.com/home'})
+
+    assert response.status_code == 400
+
+
+@pytest.mark.django_db
+def test_slack_new_invalid_link_in_link_manager(client):
+    with pytest.raises(ValueError):
+        Link.objects.create_from_slack('TreeHouse:https://teamtreehouse.com/home')
