@@ -1,6 +1,12 @@
 from django.db import models
+from links.services.slack import send_notification_to_slack
 
-# Create your models here.
+
+class LinkManager(models.Manager):
+
+    def create_from_slack(self, slack_text):
+        title, url = slack_text.split(': ')
+        return self.create(title=title, url=url)
 
 
 class Link(models.Model):
@@ -8,8 +14,16 @@ class Link(models.Model):
     url = models.URLField(max_length=2000)
     created = models.DateTimeField(auto_now_add=True)
 
+    objects = LinkManager()
+
     class Meta:
         ordering = ['-created']
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            send_notification_to_slack(self)
+
+        super(Link, self).save(*args, **kwargs)

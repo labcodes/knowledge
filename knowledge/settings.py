@@ -89,6 +89,10 @@ STATIC_URL = '/static/'
 
 LINKS_PER_PAGE = 20
 
+SLACK_TOKEN = config('SLACK_TOKEN', cast=str)
+SLACK_BOT_NAME = 'Cintia'
+SLACK_CHANNEL_ID = '#links'
+
 try:
     from .local_settings import * # noqa
 except ImportError:
