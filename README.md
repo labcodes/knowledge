@@ -9,10 +9,7 @@ and best practices. Everything curated by the most awesome people in the world, 
 
 Create a new file in the root folder called `.env`.
 Inside it, create a variable `DEBUG` with value `True` and another called `SLACK_TOKEN` and you will
-find the value for the token in this url: https://dashboard.heroku.com/apps/labcodes-knowledge/settings
-
-Find the `Config Variables` section and click the `Reveal Config Vars` button to reveal the `SLACK_TOKEN`
-variable and it's value. Copy and paste the value to your .env file.
+find the value for the token in this url: https://api.slack.com/docs/oauth-test-tokens
 
 ### Setting up the local_settings.py file
 
