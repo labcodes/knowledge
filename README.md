@@ -61,3 +61,8 @@ Open the index page in your browser:
 ```
 http://localhost:8000/
 ```
+
+### Installing editorconfig plugin
+
+In order to make .editorconfig file work, you will need to install a plugin for your editor.
+You can find it in the section `Download a Plugin` of the editorconfig site: http://editorconfig.org/
