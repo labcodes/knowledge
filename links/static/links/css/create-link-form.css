@@ -26,6 +26,7 @@
   padding: 14px 0;
   text-transform: uppercase;
   border-color: #59B2E6;
+  line-height: initial;
 }
 
 .btn-submit-link:hover,
