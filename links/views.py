@@ -13,7 +13,7 @@ from rest_framework import status
 from rest_framework.response import Response
 
 
-class IndexView(ListView):
+class ListLinksView(ListView):
     model = Link
     context_object_name = 'links'
     paginate_by = settings.LINKS_PER_PAGE
