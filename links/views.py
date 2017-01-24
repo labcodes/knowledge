@@ -22,7 +22,7 @@ class ListLinksView(ListView):
 
 class CreateLinkView(CreateView):
     template_name = 'links/create-link-form.html'
-    success_url = reverse_lazy('links:index')
+    success_url = reverse_lazy('links:list-links')
     form_class = LinkForm
 
 
