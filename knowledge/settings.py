@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'links',
     'rest_framework',
     'core',
+    'api',
 ]
 
 MIDDLEWARE = [
