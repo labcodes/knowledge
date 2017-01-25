@@ -1,5 +1,5 @@
 from django.db import models
-from links.services.slack import send_notification_to_slack
+from core.services.slack import send_notification_to_slack
 
 
 class LinkManager(models.Manager):

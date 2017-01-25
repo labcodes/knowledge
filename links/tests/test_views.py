@@ -5,15 +5,22 @@ from links.models import Link
 
 
 @pytest.mark.django_db
-def test_index_view_response(client):
+def test_index_view_redirect_response(client):
     response = client.get('/')
+
+    assert response.status_code == 302
+
+
+@pytest.mark.django_db
+def test_list_links_view_response(client):
+    response = client.get('/links/')
 
     assert response.status_code == 200
 
 
 @pytest.mark.django_db
-def test_index_template_name(client):
-    response = client.get('/')
+def test_list_links_template_name(client):
+    response = client.get('/links/')
 
     template_names = [template.name for template in response.templates]
 
@@ -35,23 +42,23 @@ def count_links(client, url):
 def test_pagination(client, mock_slack_notification):
     mommy.make(Link, _quantity=25)
 
-    links_in_the_first_page = count_links(client, '/')
+    links_in_the_first_page = count_links(client, '/links/')
 
-    links_in_the_second_page = count_links(client, '/?page=2')
+    links_in_the_second_page = count_links(client, '/links/?page=2')
 
     assert links_in_the_first_page == 20 and links_in_the_second_page == 5
 
 
 @pytest.mark.django_db
 def test_create_link_form_view_response(client):
-    response = client.get('/create-new-link/')
+    response = client.get('/links/create/')
 
     assert response.status_code == 200
 
 
 @pytest.mark.django_db
 def test_create_link_form_template_name(client):
-    response = client.get('/create-new-link/')
+    response = client.get('/links/create/')
 
     template_names = [template.name for template in response.templates]
 
