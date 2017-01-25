@@ -13,6 +13,7 @@ class Link(models.Model):
     title = models.CharField(max_length=250)
     url = models.URLField(max_length=2000)
     created = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(User, related_name='links', null=True)
 
     objects = LinkManager()
 
