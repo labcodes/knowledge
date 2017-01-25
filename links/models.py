@@ -1,12 +1,15 @@
+from django.contrib.auth.models import User
 from django.db import models
-from links.services.slack import send_notification_to_slack
+from links.services.slack import get_slack_user
 
 
 class LinkManager(models.Manager):
 
-    def create_from_slack(self, slack_text):
+    def create_from_slack(self, slack_text, slack_user_id):
         title, url = slack_text.split(': ')
-        return self.create(title=title, url=url)
+        author = get_slack_user(slack_user_id)
+
+        return self.create(title=title, url=url, author=author)
 
 
 class Link(models.Model):
