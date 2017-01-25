@@ -94,6 +94,13 @@ SLACK_TOKEN = config('SLACK_TOKEN', cast=str)
 SLACK_BOT_NAME = 'Cintia'
 SLACK_CHANNEL_ID = '#links'
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'knowledge@labcodes.com.br'
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', cast=str)
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 try:
     from .local_settings import * # noqa
 except ImportError:
