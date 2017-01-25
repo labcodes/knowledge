@@ -67,7 +67,7 @@ def test_create_link_form_template_name(client):
 
 @pytest.mark.django_db
 def test_slack_new_link_view_response(client, mock_slack_notification):
-    response = client.post('/links/api/link/', {'text': 'TreeHouse: https://teamtreehouse.com/home'})
+    response = client.post('/api/link/', {'text': 'TreeHouse: https://teamtreehouse.com/home'})
 
     link = Link.objects.all()[0]
 
@@ -78,14 +78,14 @@ def test_slack_new_link_view_response(client, mock_slack_notification):
 
 @pytest.mark.django_db
 def test_slack_new_link_view_refuse_get_method(client, monkeypatch):
-    response = client.get('/links/api/link/')
+    response = client.get('/api/link/')
 
     assert response.status_code == 405
 
 
 @pytest.mark.django_db
 def test_slack_new_invalid_link_in_view(client):
-    response = client.post('/links/api/link/', {'text': 'TreeHouse:https://teamtreehouse.com/home'})
+    response = client.post('/api/link/', {'text': 'TreeHouse:https://teamtreehouse.com/home'})
 
     assert response.data.get('text') == 'Your Link is not valid.\nPlease check the syntax: title: url'
     assert response.status_code == 400
