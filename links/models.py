@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-from links.services.slack import get_slack_user
+from core.services.slack import send_notification_to_slack, get_slack_user
 
 
 class LinkManager(models.Manager):
