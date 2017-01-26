@@ -6,7 +6,6 @@ from unittest.mock import patch
 from links.models import Link
 from core.services.slack import get_slack_user, create_author
 from core.services.utils import send_created_user_email
-from django.test.utils import override_settings
 
 
 @pytest.mark.django_db
