@@ -2,6 +2,7 @@ import pytest
 import re
 from model_mommy import mommy
 from links.models import Link
+from links.utils import get_title_from_url
 
 
 @pytest.mark.django_db
@@ -95,3 +96,13 @@ def test_slack_new_invalid_link_in_view(client):
 def test_slack_new_invalid_link_in_link_manager(client):
     with pytest.raises(ValueError):
         Link.objects.create_from_slack('TreeHouse:https://teamtreehouse.com/home')
+
+
+@pytest.mark.django_db
+def test_get_title_from_url_with_meta_title(client):
+    assert get_title_from_url('https://api.slack.com/') == 'Slack API'
+
+
+@pytest.mark.django_db
+def test_get_title_from_url_without_meta_title(client):
+    assert get_title_from_url('https://teamtreehouse.com/home') == 'Treehouse | Sign In'
