@@ -1,7 +1,10 @@
 import pytest
 import re
+from django.contrib.auth.models import User
 from model_mommy import mommy
 from links.models import Link
+from core.services.slack import get_slack_user, create_author
+from core.services.utils import send_created_user_email
 
 
 @pytest.mark.django_db
@@ -97,3 +100,18 @@ def test_slack_new_invalid_link_in_view(client):
 def test_slack_new_invalid_link_in_link_manager(client):
     with pytest.raises(ValueError):
         Link.objects.create_from_slack('TreeHouse:https://teamtreehouse.com/home', 'U3V3VMPFC')
+
+
+@pytest.mark.django_db
+def test_get_slack_user(client, mock_slack_notification):
+    author = get_slack_user('U3V3VMPFC')
+
+    assert author.email == "example@gmail.com"
+    assert author.username == "cintia"
+
+
+@pytest.mark.django_db
+def test_create_author(client, mock_slack_notification):
+    author = create_author(mommy.make(User))
+
+    assert User.objects.get(id=author.id)
