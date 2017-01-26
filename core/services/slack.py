@@ -3,7 +3,7 @@ from knowledge.settings import SLACK_TOKEN, SLACK_CHANNEL_ID, SLACK_BOT_NAME
 
 
 def send_notification_to_slack(link):
-    text_formatted = "{}\n{}".format(link.title, link.url)
+    text_formatted = "{}".format(link.url)
 
     sc = SlackClient(SLACK_TOKEN)
     sc.api_call('chat.postMessage', channel=SLACK_CHANNEL_ID, text=text_formatted,
