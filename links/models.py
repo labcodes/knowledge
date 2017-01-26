@@ -5,14 +5,10 @@ from .utils import get_title_from_url
 
 class LinkManager(models.Manager):
 
-    def create_from_slack(self, slack_text):
-        if slack_text.find(': ') == -1:
-            url = slack_text
-            title = get_title_from_url(slack_text)
-        else:
-            title, url = slack_text.split(': ')
+    def create_from_slack(self, slack_url):
+        title = get_title_from_url(slack_url)
 
-        return self.create(title=title, url=url)
+        return self.create(title=title, url=slack_url)
 
 
 class Link(models.Model):
