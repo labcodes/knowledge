@@ -68,12 +68,12 @@ def test_create_link_form_template_name(client):
 
 @pytest.mark.django_db
 def test_slack_new_link_view_response(client, mock_slack_notification):
-    response = client.post('/api/link/', {'text': 'TreeHouse: https://teamtreehouse.com/home'})
+    response = client.post('/api/link/', {'text': 'https://teamtreehouse.com/home'})
 
     link = Link.objects.all()[0]
 
     assert response.status_code == 201
-    assert link.title == "TreeHouse"
+    assert link.title == "Treehouse | Sign In"
     assert link.url == "https://teamtreehouse.com/home"
 
 
