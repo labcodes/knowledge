@@ -16,7 +16,7 @@ def create_author(user):
     password = BaseUserManager().make_random_password()
     user.set_password(password)
     user.save()
-    send_created_user_email(password)
+    send_created_user_email(password, user.email)
 
     return user
 
