@@ -2,9 +2,11 @@ import pytest
 import re
 from django.contrib.auth.models import User
 from model_mommy import mommy
+from unittest.mock import patch
 from links.models import Link
 from core.services.slack import get_slack_user, create_author
 from core.services.utils import send_created_user_email
+from django.test.utils import override_settings
 
 
 @pytest.mark.django_db
@@ -115,3 +117,11 @@ def test_create_author(client, mock_slack_notification):
     author = create_author(mommy.make(User))
 
     assert User.objects.get(id=author.id)
+
+
+@pytest.mark.django_db
+def test_email_sent_from_send_created_user_email(client):
+    with patch('django.core.mail.EmailMessage.send') as mocked_send_mail:
+        send_created_user_email('123', 'example@gmail.com')
+
+        assert mocked_send_mail.called
