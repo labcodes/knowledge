@@ -15,7 +15,8 @@ def test_create_link(mock_slack_notification):
 def test_create_from_slack_link_manager(mock_slack_notification):
 
     text = "title: http://example.com"
-    link = Link.objects.create_from_slack(text)
+    user_id = 'U3V3VMPFC'
+    link = Link.objects.create_from_slack(text, user_id)
 
     assert link.title == "title"
     assert link.url == "http://example.com"
