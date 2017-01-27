@@ -7,4 +7,4 @@ class LinkForm(forms.ModelForm):
 
     class Meta:
         model = Link
-        fields = ('title', 'url',)
+        fields = ('url',)

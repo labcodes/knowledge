@@ -6,6 +6,7 @@ from unittest.mock import patch
 from links.models import Link
 from core.services.slack import get_slack_user, create_author
 from core.services.utils import send_created_user_email
+from links.utils import get_title_from_url
 
 
 @pytest.mark.django_db
@@ -77,13 +78,13 @@ def test_create_link_form_template_name(client):
 
 @pytest.mark.django_db
 def test_slack_new_link_view_response(client, mock_slack_notification):
-    response = client.post('/api/link/', {'text': 'TreeHouse: https://teamtreehouse.com/home',
+    response = client.post('/api/link/', {'text': 'https://teamtreehouse.com/home',
                                           'user_id': 'U3V3VMPFC'})
 
     link = Link.objects.all()[0]
 
     assert response.status_code == 201
-    assert link.title == "TreeHouse"
+    assert link.title == "Treehouse | Sign In"
     assert link.url == "https://teamtreehouse.com/home"
 
 
@@ -146,3 +147,13 @@ def test_invalid_login_view(client):
     response = client.post('/links/login/', {'username': 'Error',
                                              'password': 'Error'})
     assert response.context['login_error'] == 'Wrong email or password'
+
+
+@pytest.mark.django_db
+def test_get_title_from_url_with_meta_title(client):
+    assert get_title_from_url('https://api.slack.com/') == 'Slack API'
+
+
+@pytest.mark.django_db
+def test_get_title_from_url_without_meta_title(client):
+    assert get_title_from_url('https://teamtreehouse.com/home') == 'Treehouse | Sign In'

@@ -14,12 +14,12 @@ def test_create_link(mock_slack_notification):
 @pytest.mark.django_db
 def test_create_from_slack_link_manager(mock_slack_notification):
 
-    text = "title: http://example.com"
+    text = "https://api.slack.com/"
     user_id = 'U3V3VMPFC'
     link = Link.objects.create_from_slack(text, user_id)
 
-    assert link.title == "title"
-    assert link.url == "http://example.com"
+    assert link.title == "Slack API"
+    assert link.url == "https://api.slack.com/"
 
 
 @pytest.mark.django_db

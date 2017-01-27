@@ -5,7 +5,7 @@ from .utils import send_created_user_email
 
 
 def send_notification_to_slack(link):
-    text_formatted = "{} enviou:\n{}\n{}".format(link.author, link.title, link.url)
+    text_formatted = "{} enviou:\n {}".format(link.author, link.url)
 
     sc = SlackClient(SLACK_TOKEN)
     sc.api_call('chat.postMessage', channel=SLACK_CHANNEL_ID, text=text_formatted,

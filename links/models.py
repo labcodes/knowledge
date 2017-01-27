@@ -1,15 +1,16 @@
 from django.contrib.auth.models import User
 from django.db import models
 from core.services.slack import send_notification_to_slack, get_slack_user
+from .utils import get_title_from_url
 
 
 class LinkManager(models.Manager):
 
-    def create_from_slack(self, slack_text, slack_user_id):
-        title, url = slack_text.split(': ')
+    def create_from_slack(self, slack_url, slack_user_id):
+        title = get_title_from_url(slack_url)
         author = get_slack_user(slack_user_id)
 
-        return self.create(title=title, url=url, author=author)
+        return self.create(title=title, url=slack_url, author=author)
 
 
 class Link(models.Model):
@@ -28,6 +29,8 @@ class Link(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.pk:
+            if not self.title:
+                self.title = get_title_from_url(self.url)
             send_notification_to_slack(self)
 
         super(Link, self).save(*args, **kwargs)
