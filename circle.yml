@@ -1,0 +1,20 @@
+machine:
+    python:
+      version: 3.6.0
+
+    services:
+      - postgresql
+
+test:
+    override:
+        - py.test
+
+dependencies:
+    pre:
+       -  pip install -r requirements.txt
+
+database:
+    pre:
+      - psql template1 -c 'create extension hstore;'
+      - psql -c 'create database knowledge;' -U postgres
+      - cp knowledge/database.ci.yml knowledge/local_settings.py
