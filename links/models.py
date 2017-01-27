@@ -26,6 +26,8 @@ class Link(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.pk:
+            if not self.title:
+                self.title = get_title_from_url(self.url)
             send_notification_to_slack(self)
 
         super(Link, self).save(*args, **kwargs)
