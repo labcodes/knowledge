@@ -44,6 +44,12 @@ def count_links(client, url):
 
 @pytest.mark.django_db
 def test_pagination(client, mock_slack_notification):
+    user = User.objects.create_user(username='testuser', password='12345')
+
+    user.save()
+
+    login = client.login(username='testuser', password='12345')
+
     mommy.make(Link, _quantity=25)
 
     links_in_the_first_page = count_links(client, '/links/')
