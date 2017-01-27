@@ -1,3 +1,4 @@
+beautifulsoup4==4.5.3
 dj-database-url==0.4.2
 Django==1.10.5
 djangorestframework==3.5.3
@@ -7,5 +8,6 @@ psycopg2==2.6.2
 pytest==3.0.5
 pytest-django==3.1.2
 python-decouple==3.0
+requests==2.12.4
 slackclient==1.0.4
 whitenoise==3.2.3
