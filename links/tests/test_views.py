@@ -130,3 +130,19 @@ def test_email_sent_from_send_created_user_email(client):
         send_created_user_email('123', 'example@gmail.com')
 
         assert mocked_send_mail.called
+
+
+@pytest.mark.django_db
+def test_valid_login_view(client):
+    user = mommy.make(User)
+    response = client.post('/links/login/', {'username': user.email,
+                                             'password': user.password})
+
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_invalid_login_view(client):
+    response = client.post('/links/login/', {'username': 'Error',
+                                             'password': 'Error'})
+    assert response.context['login_error'] == 'Wrong email or password'
