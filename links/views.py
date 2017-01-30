@@ -9,7 +9,6 @@ from django.conf import settings
 from .models import Link
 from .forms import LinkForm
 
-from django.contrib.auth.models import User
 from django.shortcuts import redirect
 
 
