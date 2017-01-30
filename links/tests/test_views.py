@@ -104,7 +104,7 @@ def test_slack_new_invalid_link_in_view(client):
     response = client.post('/api/link/', {'text': 'TreeHouse:https://teamtreehouse.com/home',
                                           'user_id': 'U3V3VMPFC'})
 
-    assert response.data.get('text') == 'Your Link is not valid.\nPlease check the syntax: title: url'
+    assert response.data.get('text') == 'Your Link is not valid. Please check your url.'
     assert response.status_code == 400
 
 
