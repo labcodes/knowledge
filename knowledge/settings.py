@@ -2,6 +2,8 @@ import os
 
 from decouple import config
 
+from django.urls import reverse_lazy
+
 import dj_database_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -11,6 +13,8 @@ SECRET_KEY = config(
 )
 
 DEBUG = config('DEBUG', cast=bool, default=False)
+
+LOGIN_REDIRECT_URL = reverse_lazy('links:list-links')
 
 ALLOWED_HOSTS = ['*']
 
