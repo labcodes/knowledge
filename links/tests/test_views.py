@@ -12,8 +12,18 @@ def test_index_view_redirect_response(client):
     assert response.status_code == 302
 
 
+def log_user_in(client):
+    user = User.objects.create_user(username='test', password='12345', email="example@gmail.com")
+
+    user.save()
+
+    return client.login(username='example@gmail.com', password='12345')
+
+
 @pytest.mark.django_db
 def test_list_links_view_response(client):
+    login = log_user_in(client)
+
     response = client.get('/links/')
 
     assert response.status_code == 200
@@ -21,6 +31,8 @@ def test_list_links_view_response(client):
 
 @pytest.mark.django_db
 def test_list_links_template_name(client):
+    login = log_user_in(client)
+
     response = client.get('/links/')
 
     template_names = [template.name for template in response.templates]
@@ -41,11 +53,7 @@ def count_links(client, url):
 
 @pytest.mark.django_db
 def test_pagination(client, mock_slack_notification):
-    user = User.objects.create_user(username='test', password='12345', email="example@gmail.com")
-
-    user.save()
-
-    login = client.login(username='example@gmail.com', password='12345')
+    login = log_user_in(client)
 
     mommy.make(Link, _quantity=25)
 
