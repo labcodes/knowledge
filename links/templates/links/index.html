@@ -2,8 +2,6 @@
 
 {% block 'content' %}
 
-{% if user.is_authenticated %}
-
 {% include "links/create-link-form.html" %}
 
 <div class="row links-row">
@@ -15,9 +13,5 @@
   {% endfor %}
   {% include "links/pagination.html" with page=page_obj %}
 </div>
-
-{% else %}
-{% include "core/login.html" with page=page_obj %}
-{% endif %}
 
 {% endblock %}
