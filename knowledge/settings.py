@@ -2,6 +2,8 @@ import os
 
 from decouple import config
 
+from django.urls import reverse_lazy
+
 import dj_database_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -11,6 +13,8 @@ SECRET_KEY = config(
 )
 
 DEBUG = config('DEBUG', cast=bool, default=False)
+
+LOGIN_REDIRECT_URL = reverse_lazy('links:list-links')
 
 ALLOWED_HOSTS = ['*']
 
@@ -95,6 +99,15 @@ LINKS_PER_PAGE = 20
 SLACK_TOKEN = config('SLACK_TOKEN', cast=str)
 SLACK_BOT_NAME = 'Cintia'
 SLACK_CHANNEL_ID = '#links'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'knowledge@labcodes.com.br'
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', cast=str)
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+AUTHENTICATION_BACKENDS = ['core.backends.EmailBackend']
 
 try:
     from .local_settings import * # noqa

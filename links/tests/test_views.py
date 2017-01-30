@@ -1,8 +1,8 @@
 import pytest
 import re
+from django.contrib.auth.models import User
 from model_mommy import mommy
 from links.models import Link
-from links.utils import get_title_from_url
 
 
 @pytest.mark.django_db
@@ -12,8 +12,18 @@ def test_index_view_redirect_response(client):
     assert response.status_code == 302
 
 
+def log_user_in(client):
+    user = User.objects.create_user(username='test', password='12345', email="example@gmail.com")
+
+    user.save()
+
+    return client.login(username='example@gmail.com', password='12345')
+
+
 @pytest.mark.django_db
 def test_list_links_view_response(client):
+    login = log_user_in(client)
+
     response = client.get('/links/')
 
     assert response.status_code == 200
@@ -21,6 +31,8 @@ def test_list_links_view_response(client):
 
 @pytest.mark.django_db
 def test_list_links_template_name(client):
+    login = log_user_in(client)
+
     response = client.get('/links/')
 
     template_names = [template.name for template in response.templates]
@@ -41,6 +53,8 @@ def count_links(client, url):
 
 @pytest.mark.django_db
 def test_pagination(client, mock_slack_notification):
+    login = log_user_in(client)
+
     mommy.make(Link, _quantity=25)
 
     links_in_the_first_page = count_links(client, '/links/')
@@ -68,7 +82,8 @@ def test_create_link_form_template_name(client):
 
 @pytest.mark.django_db
 def test_slack_new_link_view_response(client, mock_slack_notification):
-    response = client.post('/api/link/', {'text': 'https://teamtreehouse.com/home'})
+    response = client.post('/api/link/', {'text': 'https://teamtreehouse.com/home',
+                                          'user_id': 'U3V3VMPFC'})
 
     link = Link.objects.all()[0]
 
@@ -86,23 +101,14 @@ def test_slack_new_link_view_refuse_get_method(client, monkeypatch):
 
 @pytest.mark.django_db
 def test_slack_new_invalid_link_in_view(client):
-    response = client.post('/api/link/', {'text': 'TreeHouse:https://teamtreehouse.com/home'})
+    response = client.post('/api/link/', {'text': 'TreeHouse:https://teamtreehouse.com/home',
+                                          'user_id': 'U3V3VMPFC'})
 
-    assert response.data.get('text') == 'Your Link is not valid.\nPlease check the syntax: title: url'
+    assert response.data.get('text') == 'Your Link is not valid. Please check your url.'
     assert response.status_code == 400
 
 
 @pytest.mark.django_db
 def test_slack_new_invalid_link_in_link_manager(client):
     with pytest.raises(ValueError):
-        Link.objects.create_from_slack('TreeHouse:https://teamtreehouse.com/home')
-
-
-@pytest.mark.django_db
-def test_get_title_from_url_with_meta_title(client):
-    assert get_title_from_url('https://api.slack.com/') == 'Slack API'
-
-
-@pytest.mark.django_db
-def test_get_title_from_url_without_meta_title(client):
-    assert get_title_from_url('https://teamtreehouse.com/home') == 'Treehouse | Sign In'
+        Link.objects.create_from_slack('TreeHouse:https://teamtreehouse.com/home', 'U3V3VMPFC')

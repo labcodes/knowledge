@@ -9,6 +9,9 @@
     },
     "SLACK_TOKEN": {
       "required": true
+    },
+    "EMAIL_HOST_PASSWORD": {
+      "required": true
     }
   }
 }

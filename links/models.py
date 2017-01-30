@@ -1,20 +1,23 @@
+from django.contrib.auth.models import User
 from django.db import models
-from core.services.slack import send_notification_to_slack
+from core.services.slack import send_notification_to_slack, get_slack_user
 from .utils import get_title_from_url
 
 
 class LinkManager(models.Manager):
 
-    def create_from_slack(self, slack_url):
+    def create_from_slack(self, slack_url, slack_user_id):
         title = get_title_from_url(slack_url)
+        author = get_slack_user(slack_user_id)
 
-        return self.create(title=title, url=slack_url)
+        return self.create(title=title, url=slack_url, author=author)
 
 
 class Link(models.Model):
     title = models.CharField(max_length=250)
     url = models.URLField(max_length=2000)
     created = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(User, related_name='links', null=True)
 
     objects = LinkManager()
 

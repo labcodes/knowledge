@@ -8,12 +8,13 @@ class CreateSlackNewLinkView(APIView):
 
     def post(self, request):
         text = request.POST.get('text')
+        user_id = request.POST.get('user_id')
 
         try:
-            Link.objects.create_from_slack(text)
+            Link.objects.create_from_slack(text, user_id)
         except ValueError:
             return Response({
-                'text': 'Your Link is not valid.\nPlease check the syntax: title: url'
+                'text': 'Your Link is not valid. Please check your url.'
             }, status=status.HTTP_400_BAD_REQUEST)
 
         return Response(status=201)
