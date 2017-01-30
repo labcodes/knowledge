@@ -104,19 +104,3 @@ def test_slack_new_invalid_link_in_view(client):
 def test_slack_new_invalid_link_in_link_manager(client):
     with pytest.raises(ValueError):
         Link.objects.create_from_slack('TreeHouse:https://teamtreehouse.com/home', 'U3V3VMPFC')
-
-
-@pytest.mark.django_db
-def test_valid_login_view(client):
-    user = mommy.make(User)
-    response = client.post('/links/login/', {'username': user.email,
-                                             'password': user.password})
-
-    assert response.status_code == 200
-
-
-@pytest.mark.django_db
-def test_invalid_login_view(client):
-    response = client.post('/links/login/', {'username': 'Error',
-                                             'password': 'Error'})
-    assert response.context['login_error'] == 'Wrong email or password'
