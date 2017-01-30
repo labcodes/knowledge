@@ -2,11 +2,7 @@ import pytest
 import re
 from django.contrib.auth.models import User
 from model_mommy import mommy
-from unittest.mock import patch
 from links.models import Link
-from core.services.slack import get_slack_user, create_author
-from core.services.utils import send_created_user_email
-from links.utils import get_title_from_url
 
 
 @pytest.mark.django_db
@@ -111,29 +107,6 @@ def test_slack_new_invalid_link_in_link_manager(client):
 
 
 @pytest.mark.django_db
-def test_get_slack_user(client, mock_slack_notification):
-    author = get_slack_user('U3V3VMPFC')
-
-    assert author.email == "example@gmail.com"
-    assert author.username == "cintia"
-
-
-@pytest.mark.django_db
-def test_create_author(client, mock_slack_notification):
-    author = create_author(mommy.make(User))
-
-    assert User.objects.get(id=author.id)
-
-
-@pytest.mark.django_db
-def test_email_sent_from_send_created_user_email(client):
-    with patch('django.core.mail.EmailMessage.send') as mocked_send_mail:
-        send_created_user_email('123', 'example@gmail.com')
-
-        assert mocked_send_mail.called
-
-
-@pytest.mark.django_db
 def test_valid_login_view(client):
     user = mommy.make(User)
     response = client.post('/links/login/', {'username': user.email,
@@ -147,13 +120,3 @@ def test_invalid_login_view(client):
     response = client.post('/links/login/', {'username': 'Error',
                                              'password': 'Error'})
     assert response.context['login_error'] == 'Wrong email or password'
-
-
-@pytest.mark.django_db
-def test_get_title_from_url_with_meta_title(client):
-    assert get_title_from_url('https://api.slack.com/') == 'Slack API'
-
-
-@pytest.mark.django_db
-def test_get_title_from_url_without_meta_title(client):
-    assert get_title_from_url('https://teamtreehouse.com/home') == 'Treehouse | Sign In'
