@@ -107,6 +107,8 @@ EMAIL_HOST_USER = 'knowledge@labcodes.com.br'
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', cast=str)
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+AUTHENTICATION_BACKENDS = ['core.backends.EmailBackend']
+
 try:
     from .local_settings import * # noqa
 except ImportError:
