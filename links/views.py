@@ -9,6 +9,9 @@ from django.conf import settings
 from .models import Link
 from .forms import LinkForm
 
+from django.contrib.auth.models import User
+from django.shortcuts import redirect
+
 
 class ListLinksView(LoginRequiredMixin, ListView):
     model = Link
@@ -21,3 +24,8 @@ class CreateLinkView(CreateView):
     template_name = 'links/create-link-form.html'
     success_url = reverse_lazy('links:list-links')
     form_class = LinkForm
+
+
+    def form_valid(self, form):
+        form.save(author=self.request.user)
+        return redirect(self.success_url)
