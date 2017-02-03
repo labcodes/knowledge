@@ -13,10 +13,10 @@ def test_get_title_from_url_without_meta_title(client):
 
 
 @pytest.mark.django_db
-def test_check_for_http_in_url_with_http_in_url(client):
-    assert check_for_http_in_url('https://api.slack.com/') == 'https://api.slack.com/'
+def test_ensure_http_prefix_with_http_in_url(client):
+    assert ensure_http_prefix('https://api.slack.com/') == 'https://api.slack.com/'
 
 
 @pytest.mark.django_db
-def test_check_for_http_in_url_without_http_in_url(client):
-    assert check_for_http_in_url('api.slack.com/') == 'http://api.slack.com/'
+def test_ensure_http_prefix_without_http_in_url(client):
+    assert ensure_http_prefix('api.slack.com/') == 'http://api.slack.com/'
