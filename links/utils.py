@@ -14,5 +14,5 @@ def get_title_from_url(slack_url):
     return title
 
 
-def check_for_http_in_url(slack_url):
+def ensure_http_prefix(slack_url):
     return 'http://' + slack_url if 'http' not in slack_url else slack_url
