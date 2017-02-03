@@ -11,10 +11,10 @@ def get_title_from_url(slack_url):
         raise ConnectionError
 
     try:
-        title = soup_url.find('meta', property='og:title')
+        meta_tag_with_title = soup_url.find('meta', property='og:title')
 
-        if title:
-            title = soup_url.get('content')
+        if meta_tag_with_title:
+            title = meta_tag_with_title.get('content')
         else:
             title = soup_url.find('title').string
 
