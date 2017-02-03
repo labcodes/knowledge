@@ -19,7 +19,9 @@ def get_title_from_url(slack_url):
             title = soup_url.find('title').string
 
     except AttributeError:
-        title = soup_url.find('title').string
+        slashes_index = slack_url.find('//')
+        dot_separation = slack_url.find('.')
+        title = slack_url[slashes_index + 2:dot_separation]
 
     return title
 
