@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from core.services.slack import send_notification_to_slack, get_slack_user
-from .utils import get_title_from_url
+from .utils import get_title_from_url, ensure_http_prefix
 
 
 class LinkManager(models.Manager):
@@ -9,6 +9,7 @@ class LinkManager(models.Manager):
     def create_from_slack(self, slack_url, slack_user_id):
         title = get_title_from_url(slack_url)
         author = get_slack_user(slack_user_id)
+        slack_url = ensure_http_prefix(slack_url)
 
         return self.create(title=title, url=slack_url, author=author)
 
