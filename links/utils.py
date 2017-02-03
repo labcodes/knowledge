@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 
 
 def get_title_from_url(slack_url):
-    slack_url = check_for_http_in_url(slack_url)
+    slack_url = ensure_http_prefix(slack_url)
 
     soup_url = BeautifulSoup(requests.get(slack_url).text)
     try:

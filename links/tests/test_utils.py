@@ -1,5 +1,5 @@
 import pytest
-from links.utils import get_title_from_url, check_for_http_in_url
+from links.utils import get_title_from_url, ensure_http_prefix
 
 
 @pytest.mark.django_db
