@@ -3,6 +3,7 @@ import re
 from django.contrib.auth.models import User
 from model_mommy import mommy
 from links.models import Link
+from requests.exceptions import ConnectionError
 
 
 @pytest.mark.django_db
