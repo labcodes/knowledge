@@ -10,6 +10,8 @@ from .models import Link
 from .forms import LinkForm
 
 from django.shortcuts import redirect
+from requests.exceptions import ConnectionError
+from django.contrib import messages
 
 
 class ListLinksView(LoginRequiredMixin, ListView):
@@ -26,5 +28,9 @@ class CreateLinkView(CreateView):
 
 
     def form_valid(self, form):
-        form.save(author=self.request.user)
+        try:
+            form.save(author=self.request.user)
+        except ConnectionError:
+            messages.error(self.request, "Your Link is not valid. Please check your url.")
+
         return redirect(self.success_url)
