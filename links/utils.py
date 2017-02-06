@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from requests.exceptions import ConnectionError
 
 
 def get_title_from_url(slack_url):
@@ -7,10 +8,7 @@ def get_title_from_url(slack_url):
 
     try:
         soup_url = BeautifulSoup(requests.get(slack_url).text)
-    except:
-        raise ConnectionError
 
-    try:
         meta_tag_with_title = soup_url.find('meta', property='og:title')
 
         if meta_tag_with_title:
@@ -22,6 +20,9 @@ def get_title_from_url(slack_url):
         slashes_index = slack_url.find('//')
         dot_separation = slack_url.find('.')
         title = slack_url[slashes_index + 2:dot_separation]
+
+    except ConnectionError:
+        raise ConnectionError
 
     return title
 
