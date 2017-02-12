@@ -6,6 +6,13 @@
         <div class="row">
           <div class="col-xs-12">
             <h1>Add a new link <button class="btn btn-default logout-button"><a href="{% url 'core:logout' %}">Logout</a></button></h1>
+            {% if messages %}
+              {% for message in messages %}
+              <div class="alert alert-danger text-center">
+               {{message}}
+              </div>
+              {% endfor %}
+            {% endif %}
           </div>
         </div>
       </div>
