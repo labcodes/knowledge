@@ -8,7 +8,15 @@ and best practices. Everything curated by the most awesome people in the world, 
 ### Setting up .env file
 
 Create a new file in the root folder called `.env`.
-Inside it, create a variable `DEBUG` with value `True` and another called `SLACK_TOKEN` and you will
+Inside it, create the following variables:
+```
+DEBUG=
+SLACK_TOKEN=
+
+OPBEAT_ORGANIZATION_ID=
+OPBEAT_APP_ID=
+OPBEAT_SECRET_TOKEN=
+```
 find the value for the token in this url: https://api.slack.com/docs/oauth-test-tokens
 
 ### Setting up the local_settings.py file
