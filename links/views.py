@@ -26,7 +26,6 @@ class CreateLinkView(CreateView):
     success_url = reverse_lazy('links:list-links')
     form_class = LinkForm
 
-
     def form_valid(self, form):
         try:
             form.save(author=self.request.user)
