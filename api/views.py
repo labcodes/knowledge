@@ -12,7 +12,7 @@ class CreateSlackNewLinkView(APIView):
 
         try:
             Link.objects.create_from_slack(text, user_id)
-        except ValueError:
+        except (ValueError, ConnectionError):
             return Response({
                 'text': 'Your Link is not valid. Please check your url.'
             }, status=status.HTTP_400_BAD_REQUEST)

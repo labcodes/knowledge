@@ -3,6 +3,7 @@ import re
 from django.contrib.auth.models import User
 from model_mommy import mommy
 from links.models import Link
+from requests.exceptions import ConnectionError
 
 
 @pytest.mark.django_db
@@ -109,6 +110,6 @@ def test_slack_new_invalid_link_in_view(client):
 
 
 @pytest.mark.django_db
-def test_slack_new_invalid_link_in_link_manager(client):
-    with pytest.raises(ValueError):
-        Link.objects.create_from_slack('TreeHouse:https://teamtreehouse.com/home', 'U3V3VMPFC')
+def test_slack_new_invalid_link_in_link_manager(client, mock_slack_notification):
+    with pytest.raises(ConnectionError):
+        Link.objects.create_from_slack('http://raiseconnectionerror.com/', 'U3V3VMPFC')
