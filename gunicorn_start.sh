@@ -10,6 +10,7 @@ DJANGO_SETTINGS_MODULE=knowledge.settings
 DJANGO_WSGI_MODULE=knowledge.wsgi
 PORT=3333
 TIMEOUT=120
+LOGFILE=/home/labcodes/webapps/knowledge/logs/knowledge.log
 
 echo "Starting $NAME as `whoami`"
 
@@ -31,6 +32,6 @@ exec gunicorn ${DJANGO_WSGI_MODULE}:application \
   --user=$USER \
   --bind=unix:$SOCKFILE \
   --log-level=info \
-  --log-file=- \
+  --log-file=LOGFILE \
   --timeout $TIMEOUT \
   --bind=127.0.0.1:$PORT
