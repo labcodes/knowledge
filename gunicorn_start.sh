@@ -32,6 +32,6 @@ exec gunicorn ${DJANGO_WSGI_MODULE}:application \
   --user=$USER \
   --bind=unix:$SOCKFILE \
   --log-level=info \
-  --log-file=LOGFILE \
+  --log-file=$LOGFILE \
   --timeout $TIMEOUT \
   --bind=127.0.0.1:$PORT
