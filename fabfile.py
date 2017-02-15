@@ -38,7 +38,7 @@ def restart_nginx():
 
 
 def restart_supervisor():
-    run('sudo service supervisor restart')
+    run('sudo supervisorctl restart knowledge')
 
 
 @runs_once
