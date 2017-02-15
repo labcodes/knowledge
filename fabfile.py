@@ -30,7 +30,7 @@ def migrate_applications():
 
 
 def collect_static_files():
-    run(f'{PYTHON_PATH} manage.py collectstatic')
+    run(f'{PYTHON_PATH} manage.py collectstatic --no-input')
 
 
 def restart_nginx():
