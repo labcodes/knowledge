@@ -10,7 +10,7 @@ env.user = 'labcodes'
 
 
 def deploy():
-    with cd('/home/webapps/knowledge'):
+    with cd('/home/labcodes/webapps/knowledge'):
         git_path = os.getcwd()
 
         update_repo_from_master()
@@ -26,7 +26,7 @@ def update_repo_from_master():
 
 
 def migrate_applications():
-    run(f'{PYTHON_PATH} manage.py migrate') # noqa
+    run(f'{PYTHON_PATH} manage.py migrate')
 
 
 def collect_static_files():
