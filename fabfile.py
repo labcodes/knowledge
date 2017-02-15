@@ -9,7 +9,7 @@ env.hosts = ['labcodes.com.br']
 env.user = 'labcodes'
 
 
-def setup():
+def deploy():
     with cd('/home/webapps/knowledge'):
         git_path = os.getcwd()
 
