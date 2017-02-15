@@ -8,6 +8,7 @@ PYTHON_PATH = '/home/labcodes/.virtualenvs/knowledge/bin/python'
 env.hosts = ['labcodes.com.br']
 env.user = 'labcodes'
 
+
 def setup():
     with cd('/home/webapps/knowledge'):
         git_path = os.getcwd()
@@ -19,20 +20,26 @@ def setup():
         restart_supervisor()
         register_deployment(git_path)
 
+
 def update_repo_from_master():
     run('git pull origin master')
 
+
 def migrate_applications():
-    run(f'{PYTHON_PATH} manage.py migrate')
+    run(f'{PYTHON_PATH} manage.py migrate') # noqa
+
 
 def collect_static_files():
     run(f'{PYTHON_PATH} manage.py collectstatic')
 
+
 def restart_nginx():
     run('sudo service nginx restart')
 
+
 def restart_supervisor():
     run('sudo service supervisor restart')
+
 
 @runs_once
 def register_deployment(git_path):
