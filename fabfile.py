@@ -49,8 +49,9 @@ def register_deployment(git_path):
         organization_id = config('ORGANIZATION_ID', cast=str)
         app_id = config('APP_ID', cast=str)
         secret_token = config('SECRET_OPBEAT_TOKEN', cast=str)
-        local('curl https://intake.opbeat.com/api/v1/organizations/{}/apps/{}/releases/'
-              ' -H "Authorization: Bearer {}"'
-              ' -d rev={}'
-              ' -d branch={}'
-              ' -d status=completed'.format(organization_id, app_id, secret_token, revision, branch))
+        local(f'curl https://intake.opbeat.com/api/v1/organizations/{organization_id}/apps/{app_id}/releases/'
+              f' -H "Authorization: Bearer {secret_token}"'
+              f' -d rev={revision}'
+              f' -d branch={branch}'
+              f' -d status=completed'
+            )
