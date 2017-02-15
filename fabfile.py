@@ -1,4 +1,4 @@
-from fabric.api import runs_once, lcd, run, env, cd
+from fabric.api import runs_once, lcd, run, env, cd, local
 from decouple import config
 import os
 
