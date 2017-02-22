@@ -8,14 +8,36 @@ active
 
 {% include "links/create-link-form.html" %}
 
-<div class="row links-row">
+<div class="row">
   {% for link in links %}
-    <div class="single-link">
-      <p>{{ link.title }}</p>
-      <span><a href="{{ link.url }}" target="_blank">{{ link.url }}</a></span>
+    <div class="panel panel-default">
+      <div class="panel-heading">{{ link.title }}</div>
+      <div class="panel-body">
+        Website:
+        <span><a class="btn btn-default" href="{{ link.url }}" role="button" target="_blank">See more</a></span>
+        {% if link.tags %}
+        <div id="tagged" class="">
+          <span for="#myTags">Tags:</span>
+          <input type="text" name="myTags" id="link-{{link.id}}" value="{{link.tags}}" disabled="disabled">
+        </div>
+        {% endif %}
+      </div>
+      <div class="panel-footer">{{link.created}} - by {{link.author}}</div>
     </div>
   {% endfor %}
   {% include "links/pagination.html" with page=page_obj %}
 </div>
 
+{% endblock %}
+
+{% block 'extra_js' %}
+  <script type="text/javascript">
+    $(document).ready(function() {
+      {% for link in links %}
+      $("#link-{{link.id}}").tagit({
+        readOnly: true,
+      });
+      {% endfor %}
+    });
+  </script>
 {% endblock %}

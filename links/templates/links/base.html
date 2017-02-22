@@ -10,8 +10,15 @@
     {% block 'extra_css' %}{% endblock %}
     <link rel="stylesheet" href="{% static "links/vendors/bootstrap-3.3.7/css/bootstrap.min.css" %}">
     <link rel="stylesheet" href="{% static "links/vendors/bootstrap-3.3.7/css/bootstrap-theme.min.css" %}">
-    <link rel="stylesheet" href="{% static "links/css/main.css" %}">
     <link rel="stylesheet" href="{% static "links/css/create-link-form.css" %}">
+
+    <link rel="stylesheet" href="{% static "links/vendors/tag-it/css/jquery.tagit.css" %}">
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css">
+    <link rel="stylesheet" href="{% static 'links/css/main.css' %}">
+
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.0.2.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" charset="utf-8"></script>
   </head>
   <body>
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -40,7 +47,8 @@
       {% block 'content' %}{% endblock %}
     </div>
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="{% static "links/vendors/bootstrap-3.3.7/js/bootstrap.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "links/vendors/tag-it/js/tagit.min.js" %}"></script>
+    {% block 'extra_js' %}{% endblock %}
   </body>
 </html>

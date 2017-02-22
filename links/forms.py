@@ -7,8 +7,7 @@ class LinkForm(forms.ModelForm):
 
     class Meta:
         model = Link
-        fields = ('url',)
-
+        fields = ('url', 'tags',)
 
     def save(self, author, commit=True):
         instance = super(LinkForm, self).save(commit=False)

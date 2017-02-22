@@ -1,7 +1,11 @@
 from django.contrib.auth.models import User
 from django.db import models
+
 from core.services.slack import send_notification_to_slack, get_slack_user
-from .utils import get_title_from_url, ensure_http_prefix
+from links.utils import get_title_from_url, ensure_http_prefix
+
+from tagging.models import TagManager
+from tagging.fields import TagField
 
 
 class LinkManager(models.Manager):
@@ -19,8 +23,10 @@ class Link(models.Model):
     url = models.URLField(max_length=2000)
     created = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, related_name='links', null=True)
+    tags = TagField()
 
     objects = LinkManager()
+    tags_manager = TagManager()
 
     class Meta:
         ordering = ['-created']
