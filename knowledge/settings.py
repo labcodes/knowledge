@@ -31,6 +31,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'opbeat.contrib.django',
+    'tagging',
 ]
 
 MIDDLEWARE = [
@@ -101,9 +102,11 @@ STATIC_URL = '/static/'
 
 LINKS_PER_PAGE = 20
 
+# slack settings
 SLACK_TOKEN = config('SLACK_TOKEN', cast=str)
 SLACK_BOT_NAME = 'Cintia'
 SLACK_CHANNEL_ID = '#links'
+# end
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
@@ -114,6 +117,7 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 AUTHENTICATION_BACKENDS = ['core.backends.EmailBackend']
 
+# Opbeat settings
 ORGANIZATION_ID = config('ORGANIZATION_ID', cast=str, default=None)
 APP_ID = config('APP_ID', cast=str, default=None)
 SECRET_TOKEN = config('SECRET_TOKEN', cast=str, default=None)
@@ -123,6 +127,11 @@ OPBEAT = {
     'APP_ID': APP_ID,
     'SECRET_TOKEN': SECRET_TOKEN,
 }
+# end
+
+# django_tagging settings
+FORCE_LOWERCASE_TAGS = True
+# end
 
 try:
     from .local_settings import * # noqa
