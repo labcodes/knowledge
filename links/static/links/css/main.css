@@ -10,6 +10,7 @@
 
 .single-link {
   margin-top: 10px;
+  border: 1px solid #dddddd;;
 }
 
 .page-header {
@@ -22,4 +23,24 @@
 
 .logout-button {
   margin-bottom: 5px;
+}
+
+ul.tagit li.tagit-choice-read-only {
+  margin-top: 7px !important;
+}
+
+ul.tagit li.tagit-new {
+  padding: 0 !important;
+}
+
+ul.tagit li.tagit-new input {
+  height: 43px !important;
+}
+
+ul.tagit li {
+  margin: 0px !important;
+}
+
+#tagged ul {
+  border: 0px !important;
 }
