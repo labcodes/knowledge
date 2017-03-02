@@ -46,7 +46,7 @@ def count_links(client, url):
     text = str(response.content)
     links_counter = 0
 
-    for link in re.finditer('single-link', text):
+    for link in re.finditer('link-panel-js', text):
         links_counter = links_counter + 1
 
     return links_counter
@@ -112,4 +112,4 @@ def test_slack_new_invalid_link_in_view(client):
 @pytest.mark.django_db
 def test_slack_new_invalid_link_in_link_manager(client, mock_slack_notification):
     with pytest.raises(ConnectionError):
-        Link.objects.create_from_slack('http://raiseconnectionerror.com/', 'U3V3VMPFC')
+        Link.objects.create_from_slack('http://raiseconnectionerror.com/', 'http://raiseconnectionerror.com/', 'U3V3VMPFC')
