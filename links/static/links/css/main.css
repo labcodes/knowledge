@@ -26,21 +26,21 @@
 }
 
 ul.tagit li.tagit-choice-read-only {
-  margin-top: 7px !important;
+  margin-top: 7px;
 }
 
 ul.tagit li.tagit-new {
-  padding: 0 !important;
+  padding: 0;
 }
 
 ul.tagit li.tagit-new input {
-  height: 43px !important;
+  height: 43px;
 }
 
 ul.tagit li {
-  margin: 0px !important;
+  margin: 0px;
 }
 
 #tagged ul {
-  border: 0px !important;
+  border: 0px;
 }
