@@ -1,4 +1,5 @@
 from links.models import Link
+from links.utils import get_url_from_text
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
@@ -9,9 +10,10 @@ class CreateSlackNewLinkView(APIView):
     def post(self, request):
         text = request.POST.get('text')
         user_id = request.POST.get('user_id')
+        url = get_url_from_text(text)
 
         try:
-            Link.objects.create_from_slack(text, user_id)
+            Link.objects.create_from_slack(text, url, user_id)
         except (ValueError, ConnectionError):
             return Response({
                 'text': 'Your Link is not valid. Please check your url.'
