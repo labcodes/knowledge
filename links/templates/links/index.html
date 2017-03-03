@@ -13,16 +13,13 @@ active
     <div class="panel panel-default link-panel-js">
       <div class="panel-heading">{{ link.title }}</div>
       <div class="panel-body">
-        Website:
-        <span><a class="btn btn-default" href="{{ link.url }}" role="button" target="_blank">See more</a></span>
+        <span><a href="{{ link.url }}" role="button" target="_blank">{{ link.url }}</a></span>
         {% if link.tags %}
         <div id="tagged" class="">
-          <span for="#myTags">Tags:</span>
           <input type="text" name="myTags" id="link-{{link.id}}" value="{{link.tags}}" disabled="disabled">
         </div>
         {% endif %}
       </div>
-      <div class="panel-footer">{{link.created}} - by {{link.author}}</div>
     </div>
   {% endfor %}
   {% include "links/pagination.html" with page=page_obj %}
