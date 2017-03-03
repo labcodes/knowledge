@@ -39,8 +39,29 @@ ul.tagit li.tagit-new input {
 
 ul.tagit li {
   margin: 0px;
+  margin-right: 5px;
+}
+
+ul.tagit li.tagit-choice {
+  background: #0275d8;
+  border-color: #0275d8;
+}
+
+ul.tagit li.tagit-choice:hover {
+  background: #025aa5;
+  border-color: #01549b;
+  cursor: pointer;
 }
 
 #tagged ul {
   border: 0px;
+  padding-left: 0;
+}
+
+a.tagit-label {
+  color: white;
+}
+
+.link-panel-js .panel-heading {
+  background-image: initial;
 }
