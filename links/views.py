@@ -10,7 +10,8 @@ from links.models import Link
 from links.forms import LinkForm
 
 from requests.exceptions import ConnectionError
-# from tagging.models import Tag
+
+from tagging.models import Tag, TaggedItem
 
 
 class ListLinksView(LoginRequiredMixin, ListView):
@@ -22,6 +23,10 @@ class ListLinksView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = {}
         context['tags'] = Link.tags.split(', ')
+
+        if self.request.GET.get("tag"):
+            tag = Tag.objects.get(name=self.request.GET.get("tag"))
+            context['links'] = TaggedItem.objects.get_by_model(Link, tag)
         context.update(kwargs)
         return super(ListLinksView, self).get_context_data(**context)
 
