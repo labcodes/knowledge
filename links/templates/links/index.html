@@ -33,6 +33,9 @@ active
       {% for link in links %}
       $("#link-{{link.id}}").tagit({
         readOnly: true,
+        onTagClicked: function (event, ui) {
+          window.location.replace("{% url 'links:list-links'  %}?tag=" + ui.tagLabel);
+        }
       });
       {% endfor %}
     });
