@@ -22,7 +22,7 @@
             <form method="post" action="{% url 'links:create_new_link' %}" role="form">
               {% csrf_token %}
               <div class="form-group">
-                <input type="url" name="url" id="url" class="form-control" placeholder="Url" required>
+                <input type="text" name="url" id="url" class="form-control" placeholder="Url" required>
               </div>
               <div class="form-group">
                 <div class="row">
