@@ -22,7 +22,11 @@ active
       </div>
     </div>
   {% endfor %}
-  {% include "links/pagination.html" with page=page_obj %}
+  {% if invalid_tag %}
+    <div class="alert alert-danger">{{ invalid_tag }}</div>
+  {% else %}
+    {% include "links/pagination.html" with page=page_obj %}
+  {% endif %}
 </div>
 
 {% endblock %}
