@@ -122,7 +122,7 @@ def test_tag_that_does_not_exist(client):
 
     response = client.get('/links/?tag=tagdoesnotexist')
 
-    assert response.context['invalid_tag'] == 'This tag is invalid. Please try another one'
+    assert len(response.context['links']) == 0
 
 
 @pytest.mark.django_db
