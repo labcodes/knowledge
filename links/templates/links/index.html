@@ -22,8 +22,10 @@ active
       </div>
     </div>
   {% endfor %}
-  {% if invalid_tag %}
-    <div class="alert alert-danger">{{ invalid_tag }}</div>
+  {% if messages %}
+    {% for message in massages %}
+      <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
   {% else %}
     {% include "links/pagination.html" with page=page_obj %}
   {% endif %}
