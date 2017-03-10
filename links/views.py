@@ -30,7 +30,7 @@ class ListLinksView(LoginRequiredMixin, ListView):
                 context['links'] = TaggedItem.objects.get_by_model(Link, tag)
             except Tag.DoesNotExist:
                 context['links'] = []
-                context['invalid_tag'] = "This tag is invalid. Please try another one"
+                messages.error(self.request, "This tag is invalid. Please try another one")
 
         context.update(kwargs)
         return super(ListLinksView, self).get_context_data(**context)
