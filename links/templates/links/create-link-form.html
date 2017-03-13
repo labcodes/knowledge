@@ -8,9 +8,9 @@
             <h1>Add a new link</h1>
             {% if messages %}
               {% for message in messages %}
-              <div class="alert alert-danger text-center">
-               {{message}}
-              </div>
+                <div class="alert {% if links %} alert-danger {% else %} alert-warning {% endif %} text-center">
+                 {{ message|safe }}
+                </div>
               {% endfor %}
             {% endif %}
           </div>
