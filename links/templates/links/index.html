@@ -22,11 +22,8 @@ active
       </div>
     </div>
   {% endfor %}
-  {% if messages %}
-    {% for message in massages %}
-      <div class="alert alert-danger">{{ message }}</div>
-    {% endfor %}
-  {% else %}
+
+  {% if not messages %}
     {% include "links/pagination.html" with page=page_obj %}
   {% endif %}
 </div>
