@@ -2,6 +2,7 @@ from django.urls import reverse_lazy
 from django.conf import settings
 from django.contrib import messages
 from django.shortcuts import redirect
+from django.template import Context, Template
 from django.views.generic import CreateView
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -30,9 +31,17 @@ class ListLinksView(LoginRequiredMixin, ListView):
                 context['links'] = TaggedItem.objects.get_by_model(Link, tag)
             except Tag.DoesNotExist:
                 context['links'] = []
-                tag_does_not_exist_message = "There're no links with this tag. Go back to the " \
-                    "<a href='/links'> Home </a>page and try another one!"
-                messages.error(self.request, tag_does_not_exist_message)
+
+                tag_does_not_exist_template = Template(
+                    "There're no links with this tag. Go back to the " \
+                    "<a href='{{ home_page }}'> Home </a>page and try another one!"
+                )
+                tag_does_not_exist_context = Context(
+                    {"home_page": reverse_lazy('links:list-links')}
+                )
+                rendered_message = tag_does_not_exist_template.render(tag_does_not_exist_context)
+
+                messages.error(self.request, rendered_message)
 
         context.update(kwargs)
         return super(ListLinksView, self).get_context_data(**context)
