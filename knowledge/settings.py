@@ -31,6 +31,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'opbeat.contrib.django',
+    'fixmydjango',
 ]
 
 MIDDLEWARE = [
