@@ -34,12 +34,9 @@ class ListLinksView(LoginRequiredMixin, ListView):
 
                 tag_does_not_exist_template = Template(
                     "There're no links with this tag. Go back to the " \
-                    "<a href='{{ home_page }}'> Home </a>page and try another one!"
+                    "<a href='{% url 'links:list-links' %}'> Home </a>page and try another one!"
                 )
-                tag_does_not_exist_context = Context(
-                    {"home_page": reverse_lazy('links:list-links')}
-                )
-                rendered_message = tag_does_not_exist_template.render(tag_does_not_exist_context)
+                rendered_message = tag_does_not_exist_template.render(Context())
 
                 messages.error(self.request, rendered_message)
 
