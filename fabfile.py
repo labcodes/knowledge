@@ -23,11 +23,12 @@ def deploy():
         register_deployment(git_path)
 
 
-def install_requirements():
-    run(f'{PIP_PATH} install -r requirements.txt')
-
 def update_repo_from_master():
     run('git pull origin master')
+
+
+def install_requirements():
+    run(f'{PIP_PATH} install -r requirements.txt')
 
 
 def migrate_applications():
