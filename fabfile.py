@@ -4,6 +4,7 @@ import os
 
 
 PYTHON_PATH = '/home/labcodes/.virtualenvs/knowledge/bin/python'
+PIP_PATH = '/home/labcodes/.virtualenvs/knowledge/bin/pip'
 
 env.hosts = ['labcodes.com.br']
 env.user = 'labcodes'
@@ -14,6 +15,7 @@ def deploy():
         git_path = os.getcwd()
 
         update_repo_from_master()
+        install_requirements()
         migrate_applications()
         collect_static_files()
         restart_nginx()
@@ -23,6 +25,10 @@ def deploy():
 
 def update_repo_from_master():
     run('git pull origin master')
+
+
+def install_requirements():
+    run(f'{PIP_PATH} install -r requirements.txt')
 
 
 def migrate_applications():
