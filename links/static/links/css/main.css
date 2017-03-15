@@ -10,6 +10,7 @@
 
 .single-link {
   margin-top: 10px;
+  border: 1px solid #dddddd;;
 }
 
 .page-header {
@@ -22,4 +23,46 @@
 
 .logout-button {
   margin-bottom: 5px;
+}
+
+ul.tagit li.tagit-choice-read-only {
+  margin-top: 7px;
+}
+
+ul.tagit li.tagit-new {
+  padding: 0;
+}
+
+ul.tagit li.tagit-new input {
+  height: 43px;
+}
+
+ul.tagit li {
+  margin: 0px;
+  margin-right: 5px;
+}
+
+ul.tagit li.tagit-choice {
+  background: #0275d8;
+  border-color: #0275d8;
+}
+
+ul.tagit li.tagit-choice:hover {
+  background: #025aa5;
+  border-color: #01549b;
+  cursor: pointer;
+}
+
+#tagged ul {
+  border: 0px;
+  padding-left: 0;
+}
+
+a.tagit-label,
+span.tagit-label {
+  color: white;
+}
+
+.link-panel-js .panel-heading {
+  background-image: initial;
 }

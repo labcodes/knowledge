@@ -8,9 +8,9 @@
             <h1>Add a new link</h1>
             {% if messages %}
               {% for message in messages %}
-              <div class="alert alert-danger text-center">
-               {{message}}
-              </div>
+                <div class="alert {% if links %} alert-danger {% else %} alert-warning {% endif %} text-center">
+                 {{ message|safe }}
+                </div>
               {% endfor %}
             {% endif %}
           </div>
@@ -23,6 +23,9 @@
               {% csrf_token %}
               <div class="form-group">
                 <input type="text" name="url" id="url" class="form-control" placeholder="Url" required>
+              </div>
+              <div class="form-group">
+                <input type="text" name="tags" id="tags" class="form-control" placeholder="Tags">
               </div>
               <div class="form-group">
                 <div class="row">
@@ -38,4 +41,16 @@
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block 'extra_js' %}
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#tags").tagit({
+        allowSpaces: true,
+        availableTags: {{tags|safe}},
+        placeholderText: 'Add tags...'
+      });
+    });
+  </script>
 {% endblock %}

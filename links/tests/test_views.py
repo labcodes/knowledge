@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from model_mommy import mommy
 from links.models import Link
 from requests.exceptions import ConnectionError
+from tagging.models import Tag, TaggedItem
 
 
 @pytest.mark.django_db
@@ -46,7 +47,7 @@ def count_links(client, url):
     text = str(response.content)
     links_counter = 0
 
-    for link in re.finditer('single-link', text):
+    for link in re.finditer('link-panel-js', text):
         links_counter = links_counter + 1
 
     return links_counter
@@ -112,4 +113,28 @@ def test_slack_new_invalid_link_in_view(client):
 @pytest.mark.django_db
 def test_slack_new_invalid_link_in_link_manager(client, mock_slack_notification):
     with pytest.raises(ConnectionError):
-        Link.objects.create_from_slack('http://raiseconnectionerror.com/', 'U3V3VMPFC')
+        Link.objects.create_from_slack('http://raiseconnectionerror.com/', 'http://raiseconnectionerror.com/', 'U3V3VMPFC')
+
+
+@pytest.mark.django_db
+def test_tag_that_does_not_exist(client):
+    login = log_user_in(client)
+
+    response = client.get('/links/?tag=tagdoesnotexist')
+
+    assert len(response.context['links']) == 0
+
+
+@pytest.mark.django_db
+def test_tag_that_does_exist(client):
+    login = log_user_in(client)
+
+    tag = Tag.objects.create(name="test_tag")
+
+    link = mommy.make(Link)
+    link.tags = tag.name
+    link.save()
+
+    response = client.get('/links/?tag=test_tag')
+
+    assert len(response.context['links']) == 1

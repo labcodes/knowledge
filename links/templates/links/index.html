@@ -8,14 +8,39 @@ active
 
 {% include "links/create-link-form.html" %}
 
-<div class="row links-row">
+<div class="row">
   {% for link in links %}
-    <div class="single-link">
-      <p>{{ link.title }}</p>
-      <span><a href="{{ link.url }}" target="_blank">{{ link.url }}</a></span>
+    <div class="panel panel-default link-panel-js">
+      <div class="panel-heading">{{ link.title }}</div>
+      <div class="panel-body">
+        <span><a href="{{ link.url }}" role="button" target="_blank">{{ link.url }}</a></span>
+        {% if link.tags %}
+        <div id="tagged" class="">
+          <input type="text" name="myTags" id="link-{{link.id}}" value="{{link.tags}}" disabled="disabled">
+        </div>
+        {% endif %}
+      </div>
     </div>
   {% endfor %}
-  {% include "links/pagination.html" with page=page_obj %}
+
+  {% if not messages %}
+    {% include "links/pagination.html" with page=page_obj %}
+  {% endif %}
 </div>
 
+{% endblock %}
+
+{% block 'extra_js' %}
+  <script type="text/javascript">
+    $(document).ready(function() {
+      {% for link in links %}
+      $("#link-{{link.id}}").tagit({
+        readOnly: true,
+        onTagClicked: function (event, ui) {
+          window.location.replace("{% url 'links:list-links'  %}?tag=" + ui.tagLabel);
+        }
+      });
+      {% endfor %}
+    });
+  </script>
 {% endblock %}

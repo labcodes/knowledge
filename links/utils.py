@@ -29,3 +29,30 @@ def get_title_from_url(slack_url):
 
 def ensure_http_prefix(slack_url):
     return 'http://' + slack_url if 'http' not in slack_url else slack_url
+
+
+def text_has_tag(text):
+    text = text.strip(" ")
+    return True if len(text.split(" ")) > 1 else False
+
+
+def get_url_from_text(text):
+    text = text.strip(" ")
+    index_end_of_url = text.find(" ")
+    return text if index_end_of_url == -1 else text[:index_end_of_url]
+
+
+def get_tags_from_text(text):
+    if text_has_tag(text):
+        text = text.strip(" ")
+        index_end_of_url = text.find(" ")
+        slack_url_without_url = text[index_end_of_url + 1:]
+
+        if len(slack_url_without_url.split(",")) == 1:
+            tags = slack_url_without_url
+        else:
+            tags = [tag.strip(" ") for tag in slack_url_without_url.split(",")]
+            tags = ", ".join(tags)
+        return tags
+    else:
+        return ""
