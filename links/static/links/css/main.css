@@ -58,7 +58,8 @@ ul.tagit li.tagit-choice:hover {
   padding-left: 0;
 }
 
-a.tagit-label {
+a.tagit-label,
+span.tagit-label {
   color: white;
 }
 
