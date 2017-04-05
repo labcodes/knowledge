@@ -31,17 +31,6 @@ def test_list_links_view_response(client):
     assert response.status_code == 200
 
 
-def count_links(client, url):
-    response = client.get(url)
-    text = str(response.content)
-    links_counter = 0
-
-    for link in re.finditer('link-panel-js', text):
-        links_counter = links_counter + 1
-
-    return links_counter
-
-
 @pytest.mark.django_db
 def test_create_new_link_api_view(client):
     login = log_user_in(client)
