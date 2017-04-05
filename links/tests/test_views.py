@@ -43,6 +43,14 @@ def count_links(client, url):
 
 
 @pytest.mark.django_db
+def test_create_new_link_api_view(client):
+    login = log_user_in(client)
+
+    response = client.post('/links/create/', {'title': 'Api Slack',
+                                              'url': 'https://api.slack.com/',
+                                              'tags': ''})
+
+
 def test_create_link_view_forbidden_to_get_method(client):
     response = client.get('/links/create/')
 
