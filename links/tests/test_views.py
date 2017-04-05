@@ -31,17 +31,6 @@ def test_list_links_view_response(client):
     assert response.status_code == 200
 
 
-@pytest.mark.django_db
-def test_list_links_template_name(client):
-    login = log_user_in(client)
-
-    response = client.get('/links/')
-
-    template_names = [template.name for template in response.templates]
-
-    assert 'links/index.html' in template_names
-
-
 def count_links(client, url):
     response = client.get(url)
     text = str(response.content)
