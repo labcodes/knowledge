@@ -25,15 +25,5 @@ class ListLinksView(LoginRequiredMixin, ListAPIView):
     serializer_class = LinkSerializer
 
 
-class CreateLinkView(CreateView):
-    template_name = 'links/create-link-form.html'
-    success_url = reverse_lazy('links:list-links')
-    form_class = LinkForm
-
-    def form_valid(self, form):
-        try:
-            form.save(author=self.request.user)
-        except ConnectionError:
-            messages.error(self.request, "Your Link is not valid. Please check your url.")
-
-        return redirect(self.success_url)
+class CreateLinkView(CreateAPIView):
+    serializer_class = LinkSerializer
