@@ -43,19 +43,6 @@ def count_links(client, url):
 
 
 @pytest.mark.django_db
-def test_pagination(client, mock_slack_notification):
-    login = log_user_in(client)
-
-    mommy.make(Link, _quantity=25)
-
-    links_in_the_first_page = count_links(client, '/links/')
-
-    links_in_the_second_page = count_links(client, '/links/?page=2')
-
-    assert links_in_the_first_page == 20 and links_in_the_second_page == 5
-
-
-@pytest.mark.django_db
 def test_create_link_form_view_response(client):
     response = client.get('/links/create/')
 
