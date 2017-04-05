@@ -43,10 +43,10 @@ def count_links(client, url):
 
 
 @pytest.mark.django_db
-def test_create_link_form_view_response(client):
+def test_create_link_view_forbidden_to_get_method(client):
     response = client.get('/links/create/')
 
-    assert response.status_code == 200
+    assert response.status_code == 405
 
 
 @pytest.mark.django_db
