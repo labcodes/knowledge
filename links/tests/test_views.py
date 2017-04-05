@@ -81,27 +81,3 @@ def test_slack_new_invalid_link_in_view(client):
 def test_slack_new_invalid_link_in_link_manager(client, mock_slack_notification):
     with pytest.raises(ConnectionError):
         Link.objects.create_from_slack('http://raiseconnectionerror.com/', 'http://raiseconnectionerror.com/', 'U3V3VMPFC')
-
-
-@pytest.mark.django_db
-def test_tag_that_does_not_exist(client):
-    login = log_user_in(client)
-
-    response = client.get('/links/?tag=tagdoesnotexist')
-
-    assert len(response.context['links']) == 0
-
-
-@pytest.mark.django_db
-def test_tag_that_does_exist(client):
-    login = log_user_in(client)
-
-    tag = Tag.objects.create(name="test_tag")
-
-    link = mommy.make(Link)
-    link.tags = tag.name
-    link.save()
-
-    response = client.get('/links/?tag=test_tag')
-
-    assert len(response.context['links']) == 1
