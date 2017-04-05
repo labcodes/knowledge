@@ -7,7 +7,7 @@ class LinkSerializer(serializers.Serializer):
     published_at = serializers.SerializerMethodField(source="created")
     url = serializers.URLField()
     author = serializers.CharField(read_only=True)
-    tags = serializers.CharField()
+    tags = serializers.CharField(required=False)
 
     def get_published_at(self, obj):
         return obj.created
