@@ -50,15 +50,6 @@ def test_create_link_view_forbidden_to_get_method(client):
 
 
 @pytest.mark.django_db
-def test_create_link_form_template_name(client):
-    response = client.get('/links/create/')
-
-    template_names = [template.name for template in response.templates]
-
-    assert 'links/create-link-form.html' in template_names
-
-
-@pytest.mark.django_db
 def test_slack_new_link_view_response(client, mock_slack_notification):
     response = client.post('/api/link/', {'text': 'https://teamtreehouse.com/home',
                                           'user_id': 'U3V3VMPFC'})
