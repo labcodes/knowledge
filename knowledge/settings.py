@@ -136,19 +136,13 @@ OPBEAT = {
 FORCE_LOWERCASE_TAGS = True
 # end
 
-<<<<<<< HEAD
-=======
 # rest_framework
->>>>>>> cd10a1a076c2f8ab71c0b236305e8899e74d623f
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     ),
 }
-<<<<<<< HEAD
-=======
 # end
->>>>>>> cd10a1a076c2f8ab71c0b236305e8899e74d623f
 
 try:
     from .local_settings import * # noqa
