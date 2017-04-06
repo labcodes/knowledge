@@ -16,7 +16,7 @@ def test_valid_login_view(client):
 
 @pytest.mark.django_db
 def test_invalid_login_view(client):
-    response = client.post('/accounts/login/', {'username': 'Error',
+    response = client.post('/auth/login/', {'username': 'Error',
                                              'password': 'Error'})
 
-    assert 'Wrong email or password' in response.context['form'].errors.get('__all__')
+    assert 'Wrong email or password' in response.data['non_field_errors']
