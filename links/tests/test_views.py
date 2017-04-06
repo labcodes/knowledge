@@ -52,10 +52,10 @@ def test_create_new_link_api_view(client):
     assert response.status_code == 201
 
 
-def test_create_link_view_forbidden_to_get_method(client):
+def test_create_link_view_unauthorized_to_use_get_method(client):
     response = client.get('/links/create/')
 
-    assert response.status_code == 405
+    assert response.status_code == 401
 
 
 @pytest.mark.django_db
