@@ -15,14 +15,17 @@ from requests.exceptions import ConnectionError
 
 from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView, ListAPIView
+from rest_framework.permissions import IsAuthenticated
 
 from tagging.models import Tag, TaggedItem
 
 
 class ListLinksView(ListAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset = Link.objects.all()
     serializer_class = LinkSerializer
 
 
 class CreateLinkView(CreateAPIView):
+    permission_classes = (IsAuthenticated,)
     serializer_class = LinkSerializer
