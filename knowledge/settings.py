@@ -30,9 +30,11 @@ INSTALLED_APPS = [
     'api',
 
     'rest_framework',
+    'rest_framework.authtoken',
     'opbeat.contrib.django',
     'tagging',
     'fixmydjango',
+    'djoser',
 ]
 
 MIDDLEWARE = [
@@ -132,6 +134,14 @@ OPBEAT = {
 
 # django_tagging settings
 FORCE_LOWERCASE_TAGS = True
+# end
+
+# rest_framework
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+}
 # end
 
 try:
