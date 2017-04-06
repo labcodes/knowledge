@@ -5,9 +5,11 @@ from model_mommy import mommy
 
 @pytest.mark.django_db
 def test_valid_login_view(client):
-    user = mommy.make(User)
-    response = client.post('/accounts/login/', {'username': user.email,
-                                             'password': user.password})
+    user = User.objects.create(email='fernando@labcodes.com.br', username="fernando", is_staff=True)
+    user.set_password("123456")
+    user.save()
+
+    response = client.post('/auth/login/', {'username': user.email, 'password': '123456'})
 
     assert response.status_code == 200
 
