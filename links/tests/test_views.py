@@ -15,29 +15,41 @@ def test_index_view_redirect_response(client):
 
 
 def log_user_in(client):
-    user = User.objects.create_user(username='test', password='12345', email="example@gmail.com")
-
+    user = User.objects.create(email='fernando@labcodes.com.br', username="fernando", is_staff=True)
+    user.set_password("123456")
     user.save()
 
-    return client.login(username='example@gmail.com', password='12345')
+    return client.post('/auth/login/', {'username': user.email, 'password': '123456'}).data['auth_token']
 
 
 @pytest.mark.django_db
 def test_list_links_view_response(client):
-    login = log_user_in(client)
+    token = log_user_in(client)
 
-    response = client.get('/links/')
+    response = client.get('/links/',  HTTP_AUTHORIZATION='Token {}'.format(token))
 
     assert response.status_code == 200
 
 
 @pytest.mark.django_db
+def test_list_links_view_response_with_wrong_token(client):
+    token = 'aadsiosdidsdsi'
+
+    response = client.get('/links/',  HTTP_AUTHORIZATION='Token {}'.format(token))
+
+    assert response.status_code == 401
+
+
+@pytest.mark.django_db
 def test_create_new_link_api_view(client):
-    login = log_user_in(client)
+
+    token = log_user_in(client)
 
     response = client.post('/links/create/', {'title': 'Api Slack',
                                               'url': 'https://api.slack.com/',
-                                              'tags': ''})
+                                              'tags': ''}, HTTP_AUTHORIZATION='Token {}'.format(token))
+
+    assert response.status_code == 201
 
 
 def test_create_link_view_forbidden_to_get_method(client):
