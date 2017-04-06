@@ -6,7 +6,6 @@ from django.shortcuts import redirect
 from django.template import Context, Template
 from django.views.generic import CreateView
 from django.views.generic.list import ListView
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 from links.models import Link
 from links.forms import LinkForm
@@ -20,7 +19,7 @@ from rest_framework.generics import CreateAPIView, ListAPIView
 from tagging.models import Tag, TaggedItem
 
 
-class ListLinksView(LoginRequiredMixin, ListAPIView):
+class ListLinksView(ListAPIView):
     queryset = Link.objects.all()
     serializer_class = LinkSerializer
 
