@@ -1,10 +1,8 @@
 import pytest
-import re
 from django.contrib.auth.models import User
 from model_mommy import mommy
 from links.models import Link
 from requests.exceptions import ConnectionError
-from tagging.models import Tag, TaggedItem
 
 
 @pytest.mark.django_db
@@ -40,7 +38,7 @@ def test_list_links_view_response(client):
 def test_list_links_view_response_with_wrong_token(client):
     token = 'aadsiosdidsdsi'
 
-    response = client.get('/links/',  HTTP_AUTHORIZATION='Token {}'.format(token))
+    response = client.get('/links/', HTTP_AUTHORIZATION='Token {}'.format(token))
 
     assert response.status_code == 401
 
@@ -50,9 +48,11 @@ def test_create_new_link_api_view(client):
 
     token = log_user_in(client)
 
-    response = client.post('/links/create/', {'title': 'Api Slack',
-                                              'url': 'https://api.slack.com/',
-                                              'tags': ''}, HTTP_AUTHORIZATION='Token {}'.format(token))
+    response = client.post(
+        '/links/create/',
+        {'title': 'Api Slack', 'url': 'https://api.slack.com/', 'tags': ''},
+        HTTP_AUTHORIZATION='Token {}'.format(token)
+    )
 
     assert response.status_code == 201
 
@@ -94,4 +94,5 @@ def test_slack_new_invalid_link_in_view(client):
 @pytest.mark.django_db
 def test_slack_new_invalid_link_in_link_manager(client, mock_slack_notification):
     with pytest.raises(ConnectionError):
-        Link.objects.create_from_slack('http://raiseconnectionerror.com/', 'http://raiseconnectionerror.com/', 'U3V3VMPFC')
+        Link.objects.create_from_slack(
+            'http://raiseconnectionerror.com/', 'http://raiseconnectionerror.com/', 'U3V3VMPFC')
