@@ -22,5 +22,4 @@ urlpatterns = [
     url(r'^', include('core.urls', namespace="core")),
     url(r'^links/', include('links.urls', namespace="links")),
     url(r'^api/', include('api.urls', namespace="api")),
-    url(r'^auth/', include('djoser.urls.authtoken')),
 ]

@@ -15,18 +15,23 @@ def test_index_view_redirect_response(client):
 
 
 def log_user_in(client):
-    user = User.objects.create(email='fernando@labcodes.com.br', username="fernando", is_staff=True)
+    user = mommy.make(
+        User,
+        email='test@labcodes.com.br',
+        username='test_user',
+        is_staff=True)
     user.set_password("123456")
     user.save()
 
-    return client.post('/auth/login/', {'username': user.email, 'password': '123456'}).data['auth_token']
+    return client.post(
+        '/api/auth/login/', {'username': user.email, 'password': '123456'}).data['auth_token']
 
 
 @pytest.mark.django_db
 def test_list_links_view_response(client):
     token = log_user_in(client)
 
-    response = client.get('/links/',  HTTP_AUTHORIZATION='Token {}'.format(token))
+    response = client.get('/links/', HTTP_AUTHORIZATION='Token {}'.format(token))
 
     assert response.status_code == 200
 
