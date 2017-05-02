@@ -6,5 +6,5 @@ from django.views.generic import RedirectView
 from core import views
 
 urlpatterns = [
-    url(r'^$', RedirectView.as_view(url=reverse_lazy('links:list-links'))),
+    url(r'^$', RedirectView.as_view(url=reverse_lazy('api:djoser:login'))),
 ]
