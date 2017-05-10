@@ -1,10 +1,8 @@
 import pytest
-import re
 from django.contrib.auth.models import User
 from model_mommy import mommy
 from links.models import Link
 from requests.exceptions import ConnectionError
-from tagging.models import Tag, TaggedItem
 
 
 @pytest.mark.django_db
@@ -15,71 +13,54 @@ def test_index_view_redirect_response(client):
 
 
 def log_user_in(client):
-    user = User.objects.create_user(username='test', password='12345', email="example@gmail.com")
-
+    user = mommy.make(
+        User,
+        email='test@labcodes.com.br',
+        username='test_user',
+        is_staff=True)
+    user.set_password("123456")
     user.save()
 
-    return client.login(username='example@gmail.com', password='12345')
+    return client.post(
+        '/api/auth/login/', {'username': user.email, 'password': '123456'}).data['auth_token']
 
 
 @pytest.mark.django_db
 def test_list_links_view_response(client):
-    login = log_user_in(client)
+    token = log_user_in(client)
 
-    response = client.get('/links/')
-
-    assert response.status_code == 200
-
-
-@pytest.mark.django_db
-def test_list_links_template_name(client):
-    login = log_user_in(client)
-
-    response = client.get('/links/')
-
-    template_names = [template.name for template in response.templates]
-
-    assert 'links/index.html' in template_names
-
-
-def count_links(client, url):
-    response = client.get(url)
-    text = str(response.content)
-    links_counter = 0
-
-    for link in re.finditer('link-panel-js', text):
-        links_counter = links_counter + 1
-
-    return links_counter
-
-
-@pytest.mark.django_db
-def test_pagination(client, mock_slack_notification):
-    login = log_user_in(client)
-
-    mommy.make(Link, _quantity=25)
-
-    links_in_the_first_page = count_links(client, '/links/')
-
-    links_in_the_second_page = count_links(client, '/links/?page=2')
-
-    assert links_in_the_first_page == 20 and links_in_the_second_page == 5
-
-
-@pytest.mark.django_db
-def test_create_link_form_view_response(client):
-    response = client.get('/links/create/')
+    response = client.get('/api/links/', HTTP_AUTHORIZATION='Token {}'.format(token))
 
     assert response.status_code == 200
 
 
 @pytest.mark.django_db
-def test_create_link_form_template_name(client):
-    response = client.get('/links/create/')
+def test_list_links_view_response_with_wrong_token(client):
+    token = 'aadsiosdidsdsi'
 
-    template_names = [template.name for template in response.templates]
+    response = client.get('/api/links/', HTTP_AUTHORIZATION='Token {}'.format(token))
 
-    assert 'links/create-link-form.html' in template_names
+    assert response.status_code == 401
+
+
+@pytest.mark.django_db
+def test_create_new_link_api_view(client):
+
+    token = log_user_in(client)
+
+    response = client.post(
+        '/api/links/create/',
+        {'title': 'Api Slack', 'url': 'https://api.slack.com/', 'tags': ''},
+        HTTP_AUTHORIZATION='Token {}'.format(token)
+    )
+
+    assert response.status_code == 201
+
+
+def test_create_link_view_unauthorized_to_use_get_method(client):
+    response = client.get('/api/links/create/')
+
+    assert response.status_code == 401
 
 
 @pytest.mark.django_db
@@ -113,28 +94,5 @@ def test_slack_new_invalid_link_in_view(client):
 @pytest.mark.django_db
 def test_slack_new_invalid_link_in_link_manager(client, mock_slack_notification):
     with pytest.raises(ConnectionError):
-        Link.objects.create_from_slack('http://raiseconnectionerror.com/', 'http://raiseconnectionerror.com/', 'U3V3VMPFC')
-
-
-@pytest.mark.django_db
-def test_tag_that_does_not_exist(client):
-    login = log_user_in(client)
-
-    response = client.get('/links/?tag=tagdoesnotexist')
-
-    assert len(response.context['links']) == 0
-
-
-@pytest.mark.django_db
-def test_tag_that_does_exist(client):
-    login = log_user_in(client)
-
-    tag = Tag.objects.create(name="test_tag")
-
-    link = mommy.make(Link)
-    link.tags = tag.name
-    link.save()
-
-    response = client.get('/links/?tag=test_tag')
-
-    assert len(response.context['links']) == 1
+        Link.objects.create_from_slack(
+            'http://raiseconnectionerror.com/', 'http://raiseconnectionerror.com/', 'U3V3VMPFC')
