@@ -29,7 +29,7 @@ def log_user_in(client):
 def test_list_links_view_response(client):
     token = log_user_in(client)
 
-    response = client.get('/links/', HTTP_AUTHORIZATION='Token {}'.format(token))
+    response = client.get('/api/links/', HTTP_AUTHORIZATION='Token {}'.format(token))
 
     assert response.status_code == 200
 
@@ -38,7 +38,7 @@ def test_list_links_view_response(client):
 def test_list_links_view_response_with_wrong_token(client):
     token = 'aadsiosdidsdsi'
 
-    response = client.get('/links/', HTTP_AUTHORIZATION='Token {}'.format(token))
+    response = client.get('/api/links/', HTTP_AUTHORIZATION='Token {}'.format(token))
 
     assert response.status_code == 401
 
@@ -49,7 +49,7 @@ def test_create_new_link_api_view(client):
     token = log_user_in(client)
 
     response = client.post(
-        '/links/create/',
+        '/api/links/create/',
         {'title': 'Api Slack', 'url': 'https://api.slack.com/', 'tags': ''},
         HTTP_AUTHORIZATION='Token {}'.format(token)
     )
@@ -58,7 +58,7 @@ def test_create_new_link_api_view(client):
 
 
 def test_create_link_view_unauthorized_to_use_get_method(client):
-    response = client.get('/links/create/')
+    response = client.get('/api/links/create/')
 
     assert response.status_code == 401
 
