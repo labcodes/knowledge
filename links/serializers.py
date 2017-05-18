@@ -3,7 +3,7 @@ from rest_framework import serializers
 
 
 class LinkSerializer(serializers.Serializer):
-    title = serializers.CharField()
+    title = serializers.CharField(required=False)
     published_at = serializers.SerializerMethodField(source="created")
     url = serializers.URLField()
     author = serializers.CharField(read_only=True)
