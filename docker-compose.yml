@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  web:
+    restart: always
+    build: .
+    expose:
+      - "8000"
+    links:
+      - postgres:postgres
+    volumes:
+      - /app
+      - /app/static
+    env_file: .env
+    command: python manage.py collectstatic --noinput
+    command: python manage.py migrate --noinput
+    command: /usr/local/bin/gunicorn knowledge.wsgi:application -w 2 -b :8000
+
+  nginx:
+    restart: always
+    build: ./conf/nginx/
+    ports:
+      - "80:80"
+    volumes:
+      - /app/static
+      - /app
+    links:
+      - web:web
+
+  postgres:
+    restart: always
+    image: postgres:9.6.5
