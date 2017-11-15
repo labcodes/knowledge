@@ -1,6 +1,7 @@
 version: '3'
 
 services:
+
   web:
     restart: always
     build: .
@@ -10,11 +11,14 @@ services:
       - postgres:postgres
     volumes:
       - /app
-      - /app/static
+      - /app/staticfiles:/app/staticfiles
     env_file: .env
-    command: python manage.py collectstatic --noinput
-    command: python manage.py migrate --noinput
-    command: /usr/local/bin/gunicorn knowledge.wsgi:application -w 2 -b :8000
+    depends_on:
+      - postgres
+    command: bash -c "python manage.py collectstatic --noinput && python manage.py migrate --noinput && /usr/local/bin/gunicorn knowledge.wsgi:application -w 2 -b :8000"
+    image: python:3.6
+    deploy:
+      replicas: 5
 
   nginx:
     restart: always
@@ -22,10 +26,11 @@ services:
     ports:
       - "80:80"
     volumes:
-      - /app/static
+      - /app/staticfiles:/app/staticfiles
       - /app
     links:
       - web:web
+    image: tutum/nginx
 
   postgres:
     restart: always
