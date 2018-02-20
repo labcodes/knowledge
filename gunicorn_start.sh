@@ -4,7 +4,6 @@ NAME="knowledge"
 DJANGODIR=/home/labcodes/knowledge/knowledge
 SOCKFILE=/home/labcodes/knowledge/run/gunicorn.sock
 USER=labcodes
-GROUP=webapps
 NUM_WORKERS=1
 DJANGO_SETTINGS_MODULE=knowledge.settings
 DJANGO_WSGI_MODULE=knowledge.wsgi
