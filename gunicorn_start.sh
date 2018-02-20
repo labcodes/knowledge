@@ -1,8 +1,8 @@
 #!/bin/bash
 
 NAME="knowledge"
-DJANGODIR=/home/labcodes/webapps/knowledge
-SOCKFILE=/home/labcodes/webapps/knowledge/run/gunicorn.sock
+DJANGODIR=/home/labcodes/knowledge
+SOCKFILE=/home/labcodes/knowledge/run/gunicorn.sock
 USER=labcodes
 GROUP=webapps
 NUM_WORKERS=1
@@ -10,13 +10,13 @@ DJANGO_SETTINGS_MODULE=knowledge.settings
 DJANGO_WSGI_MODULE=knowledge.wsgi
 PORT=3333
 TIMEOUT=120
-LOGFILE=/home/labcodes/webapps/knowledge/logs/knowledge.log
+LOGFILE=/home/labcodes/knowledge/logs/gunicorn.log
 
 echo "Starting $NAME as `whoami`"
 
 # Activate the virtual environment
 cd $DJANGODIR
-source /home/labcodes/.virtualenvs/knowledge/bin/activate
+source ..env/bin/activate
 export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
 export PYTHONPATH=$DJANGODIR:$PYTHONPATH
 
