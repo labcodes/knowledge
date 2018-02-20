@@ -1,7 +1,7 @@
 #!/bin/bash
 
 NAME="knowledge"
-DJANGODIR=/home/labcodes/knowledge
+DJANGODIR=/home/labcodes/knowledge/knowledge
 SOCKFILE=/home/labcodes/knowledge/run/gunicorn.sock
 USER=labcodes
 GROUP=webapps
@@ -16,7 +16,7 @@ echo "Starting $NAME as `whoami`"
 
 # Activate the virtual environment
 cd $DJANGODIR
-source ..env/bin/activate
+source ../env/bin/activate
 export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
 export PYTHONPATH=$DJANGODIR:$PYTHONPATH
 
