@@ -8,8 +8,8 @@ from rest_framework.response import Response
 class CreateSlackNewLinkView(APIView):
 
     def post(self, request):
-        text = request.POST.get('text')
-        user_id = request.POST.get('user_id')
+        text = request.data.get('text')
+        user_id = request.data.get('user_id')
         url = get_url_from_text(text)
 
         try:
