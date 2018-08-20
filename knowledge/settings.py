@@ -122,12 +122,14 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 AUTHENTICATION_BACKENDS = ['core.backends.EmailBackend']
 
-RAVEN_CONFIG = {
-    'dsn': config('SENTRY_DSN', cast=str),
-    # If you are using git, you can also automatically configure the
-    # release based on the git info.
-    'release': raven.fetch_git_sha(BASE_DIR),
-}
+USE_SENTRY = config('USE_SENTRY', cast=bool, default=False)
+if USE_SENTRY:
+    RAVEN_CONFIG = {
+        'dsn': config('SENTRY_DSN', cast=str),
+        # If you are using git, you can also automatically configure the
+        # release based on the git info.
+        'release': raven.fetch_git_sha(BASE_DIR),
+    }
 
 # django_tagging settings
 FORCE_LOWERCASE_TAGS = True
