@@ -16,3 +16,4 @@ requests==2.12.4
 slackclient==1.0.4
 whitenoise==3.2.3
 django-cors-headers==2.0.2
+raven==6.9.0

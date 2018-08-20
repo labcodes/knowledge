@@ -32,9 +32,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'djoser',
     'rest_framework.authtoken',
-    'opbeat.contrib.django',
+    'raven.contrib.django.raven_compat',
     'tagging',
-    'fixmydjango',
     'corsheaders',
 ]
 
