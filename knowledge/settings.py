@@ -1,5 +1,7 @@
 import os
 
+import raven
+
 from decouple import config
 
 from django.urls import reverse_lazy
@@ -38,7 +40,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'opbeat.contrib.django.middleware.OpbeatAPMMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -121,17 +122,12 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 AUTHENTICATION_BACKENDS = ['core.backends.EmailBackend']
 
-# Opbeat settings
-ORGANIZATION_ID = config('ORGANIZATION_ID', cast=str, default=None)
-APP_ID = config('APP_ID', cast=str, default=None)
-SECRET_TOKEN = config('SECRET_TOKEN', cast=str, default=None)
-
-OPBEAT = {
-    'ORGANIZATION_ID': ORGANIZATION_ID,
-    'APP_ID': APP_ID,
-    'SECRET_TOKEN': SECRET_TOKEN,
+RAVEN_CONFIG = {
+    'dsn': config('SENTRY_DSN', cast=str),
+    # If you are using git, you can also automatically configure the
+    # release based on the git info.
+    'release': raven.fetch_git_sha(BASE_DIR),
 }
-# end
 
 # django_tagging settings
 FORCE_LOWERCASE_TAGS = True
