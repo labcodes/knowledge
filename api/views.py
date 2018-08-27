@@ -11,7 +11,7 @@ logger = logging.getLogger('django')
 class CreateSlackNewLinkView(APIView):
 
     def post(self, request):
-        logger.info(f'Received payload: {request.data}')
+        logger.info('Received payload: {0}'.format(request.data))
         text = request.data.get('text')
         user_id = request.data.get('user_id')
         url = get_url_from_text(text)
