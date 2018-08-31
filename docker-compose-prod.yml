@@ -1,8 +1,9 @@
 version: '3'
 
 volumes:
-  knowledge_static: {}
-  knowledge_db: {}
+  django_app: {}
+  django_static: {}
+  postgres_db: {}
 
 services:
   web:
@@ -14,8 +15,9 @@ services:
     links:
       - postgres
     volumes:
-      - knowledge_static:/app/staticfiles
-    env_file: .env_docker
+      - django_app:/app
+      - django_static:/app/staticfiles
+    env_file: .env-prod
     expose:
       - 8000
     depends_on:
@@ -28,7 +30,8 @@ services:
     ports:
       - 88:80
     volumes:
-      - knowledge_static:/app/staticfiles
+      - django_app:/app
+      - django_static:/app/staticfiles
       - ./conf/nginx:/etc/nginx/conf.d
     links:
       - web
@@ -38,7 +41,7 @@ services:
     container_name: knowledge_db
     image: postgres:9.6.5
     volumes:
-      - knowledge_db:/var/lib/postgresql/data
-    env_file: .env_docker
+      - postgres_db:/var/lib/postgresql/data
+    env_file: .env-prod
     ports:
       - 5434:5432
