@@ -1,15 +1,19 @@
+import logging
 from links.models import Link
 from links.utils import get_url_from_text
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 
+logger = logging.getLogger('django')
+
 
 class CreateSlackNewLinkView(APIView):
 
     def post(self, request):
-        text = request.POST.get('text')
-        user_id = request.POST.get('user_id')
+        logger.info('Received payload: {0}'.format(request.data))
+        text = request.data.get('text')
+        user_id = request.data.get('user_id')
         url = get_url_from_text(text)
 
         try:

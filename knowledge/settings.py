@@ -1,5 +1,7 @@
 import os
 
+import raven
+
 from decouple import config
 
 from django.urls import reverse_lazy
@@ -32,14 +34,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'djoser',
     'rest_framework.authtoken',
-    'opbeat.contrib.django',
+    'raven.contrib.django.raven_compat',
     'tagging',
-    'fixmydjango',
     'corsheaders',
 ]
 
 MIDDLEWARE = [
-    'opbeat.contrib.django.middleware.OpbeatAPMMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -122,17 +122,14 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 AUTHENTICATION_BACKENDS = ['core.backends.EmailBackend']
 
-# Opbeat settings
-ORGANIZATION_ID = config('ORGANIZATION_ID', cast=str, default=None)
-APP_ID = config('APP_ID', cast=str, default=None)
-SECRET_TOKEN = config('SECRET_TOKEN', cast=str, default=None)
-
-OPBEAT = {
-    'ORGANIZATION_ID': ORGANIZATION_ID,
-    'APP_ID': APP_ID,
-    'SECRET_TOKEN': SECRET_TOKEN,
-}
-# end
+USE_SENTRY = config('USE_SENTRY', cast=bool, default=False)
+if USE_SENTRY:
+    RAVEN_CONFIG = {
+        'dsn': config('SENTRY_DSN', cast=str),
+        # If you are using git, you can also automatically configure the
+        # release based on the git info.
+        'release': raven.fetch_git_sha(BASE_DIR),
+    }
 
 # django_tagging settings
 FORCE_LOWERCASE_TAGS = True
@@ -155,3 +152,30 @@ try:
     from .local_settings import * # noqa
 except ImportError:
     pass
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': config('DJANGO_LOG_LEVEL', default='INFO'),
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'propagate': True,
+        }
+    }
+}
