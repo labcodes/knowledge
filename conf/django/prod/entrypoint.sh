@@ -2,4 +2,4 @@
 
 python manage.py collectstatic --noinput
 python manage.py migrate --noinput
-/usr/local/bin/gunicorn knowledge.wsgi:application -w 2 -b :8000"
+gunicorn knowledge.wsgi:application -w 2 -b :8000

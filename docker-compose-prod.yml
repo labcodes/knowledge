@@ -14,25 +14,22 @@ services:
     links:
       - postgres
     volumes:
-      - .:/app
       - knowledge_static:/app/staticfiles
     env_file: .env_docker
     expose:
       - 8000
-    ports:
-      - 8000:8000
     depends_on:
       - postgres
 
   nginx:
     restart: always
-    image: tutum/nginx
-    build: ./conf/nginx/
+    container_name: knowledge_nginx
+    image: nginx:latest
     ports:
       - 88:80
     volumes:
-      - .:/app
       - knowledge_static:/app/staticfiles
+      - ./conf/nginx:/etc/nginx/conf.d
     links:
       - web
 
