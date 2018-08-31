@@ -10,31 +10,17 @@ services:
     image: labcodes/knowledge
     build:
       context: .
-      dockerfile: ./conf/django/prod/Dockerfile
+      dockerfile: ./conf/django/dev/Dockerfile
     links:
       - postgres
     volumes:
       - .:/app
       - knowledge_static:/app/staticfiles
     env_file: .env_docker
-    expose:
-      - 8000
     ports:
-      - 8000:8000
+      - 8080:8000
     depends_on:
       - postgres
-
-  nginx:
-    restart: always
-    image: tutum/nginx
-    build: ./conf/nginx/
-    ports:
-      - 88:80
-    volumes:
-      - .:/app
-      - knowledge_static:/app/staticfiles
-    links:
-      - web
 
   postgres:
     restart: always
