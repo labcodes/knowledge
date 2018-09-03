@@ -114,11 +114,11 @@ SLACK_CHANNEL_ID = '#links'
 # end
 
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.mailgun.org'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'knowledge@labcodes.com.br'
+EMAIL_HOST_USER = 'postmaster@mg.labcodes.com.br'
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', cast=str)
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = 'knowledge@labcodes.com.br'
 
 AUTHENTICATION_BACKENDS = ['core.backends.EmailBackend']
 
