@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'raven.contrib.django.raven_compat',
     'tagging',
     'corsheaders',
+    'anymail',
 ]
 
 MIDDLEWARE = [
@@ -113,11 +114,12 @@ SLACK_BOT_NAME = 'Cintia'
 SLACK_CHANNEL_ID = '#links'
 # end
 
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.mailgun.org'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'postmaster@mg.labcodes.com.br'
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', cast=str)
+ANYMAIL = {
+    "MAILGUN_API_KEY": config('MAILGUN_API_KEY', cast=str),
+    "MAILGUN_SENDER_DOMAIN": 'mg.labcodes.com.br'
+}
+
+EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 DEFAULT_FROM_EMAIL = 'knowledge@labcodes.com.br'
 
 AUTHENTICATION_BACKENDS = ['core.backends.EmailBackend']

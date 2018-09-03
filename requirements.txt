@@ -1,7 +1,7 @@
 beautifulsoup4==4.5.3
 cryptography==1.7.2
 dj-database-url==0.4.2
-Django==1.10.5
+Django==1.11.15
 django-tagging==0.4.5
 djangorestframework==3.5.3
 djoser==0.5.4
@@ -17,3 +17,4 @@ slackclient==1.0.4
 whitenoise==3.2.3
 django-cors-headers==2.0.2
 raven==6.9.0
+django-anymail==4.1

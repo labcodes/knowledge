@@ -12,10 +12,10 @@ Inside it, create the following variables:
 ```
 DEBUG=
 SLACK_TOKEN=
+MAILGUN_API_KEY=
 
-OPBEAT_ORGANIZATION_ID=
-OPBEAT_APP_ID=
-OPBEAT_SECRET_TOKEN=
+USE_SENTRY=
+SENTRY_DSN=
 ```
 find the value for the token in this url: https://api.slack.com/docs/oauth-test-tokens
 
